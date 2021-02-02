@@ -33,31 +33,23 @@ public class PostREST {
     @GetMapping(value = "/api/web/posts")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public Flux<PostDomain> readAsll(){
+
         return postService.findAllPosts();
     }
 
     @PostMapping(value = "/resource/post/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Mono<UpdateDomain> createPost(@PathVariable("id") String id, Principal principal,
-                                                 @RequestBody @Valid PostDomain postDomain){
-        return postService.savePost(id,postDomain,principal).map((m)->{
-            String[] arrSplit = principal.getName().split(",");
-            return new UpdateDomain(
-                    "INICIADO",
-                    arrSplit[0],
-                    arrSplit[1],
-                    m.getIdpost(),
-                    getdate.date(),
-                    getdate.date());
-        }).flatMap(updatePostRepository::save);
+    public Mono<PostDomain> createPost(@PathVariable("id") String id, Principal principal,
+                                                 @RequestBody  PostDomain postDomain){
+        return postService.savePost(id,postDomain,principal);
     }
 
     @PutMapping(value = "/resource/post/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Mono<?> updatePost(@PathVariable("id") String id,
-                                              @RequestBody @Valid PostDomain postDomain, Principal principal){
+    public Mono<PostDomain> updatePost(@PathVariable("id") String id,
+                                              @RequestBody PostDomain postDomain, Principal principal){
         return postService.updatePostUser(id,postDomain,principal);
 
     }

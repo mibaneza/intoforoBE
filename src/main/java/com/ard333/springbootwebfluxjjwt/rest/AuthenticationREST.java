@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Date;
+
 /**
  *
  * @author ard333
@@ -36,8 +38,12 @@ public class AuthenticationREST {
 	private UserService userService;
 
 	@Autowired
-	private DiscordService discordService;
 
+	private DiscordService discordService;
+	@RequestMapping(value = "/api/web/awd", method = RequestMethod.GET)
+	public Date loawdawdgin() {
+		return userService.datByUser("486290136267489300");
+	}
 
 	@RequestMapping(value = "/api/web/login", method = RequestMethod.POST)
 	public Mono<ResponseEntity<?>> login(@RequestBody String token) {

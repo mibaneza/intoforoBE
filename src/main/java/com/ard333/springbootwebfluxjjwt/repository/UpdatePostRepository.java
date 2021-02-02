@@ -9,4 +9,5 @@ import reactor.core.publisher.Mono;
 public interface UpdatePostRepository extends ReactiveMongoRepository<UpdateDomain, String> {
     Mono<UpdateDomain> findByIdcolleAndUsername(String idColle, String iduser);
     Mono<UpdateDomain> findByIdcolleAndUsernameAndTitle(String idColle, String iduser,String title);
+    Mono<Boolean> existsByIdcolleAndUsernameAndTitle(String idColle, String iduser,String title);
 }

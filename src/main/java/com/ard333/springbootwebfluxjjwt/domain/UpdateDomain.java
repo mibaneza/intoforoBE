@@ -4,6 +4,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
+import reactor.core.publisher.Mono;
 
 import java.util.Date;
 
@@ -16,8 +17,6 @@ public class UpdateDomain {
 
     private String username;
 
-    private String avatar;
-
     private String idcolle;
 
     private Date indat;
@@ -29,19 +28,26 @@ public class UpdateDomain {
     public UpdateDomain() {
     }
 
-    public UpdateDomain(String title, String username, String avatar, String idcolle, Date indat, Date updat) {
+    public UpdateDomain(
+            String title,
+            String username,
+            String idcolle,
+            Date indat,
+            Date updat) {
         this.title = title;
         this.username = username;
-        this.avatar = avatar;
         this.idcolle = idcolle;
         this.indat = indat;
         this.updat = updat;
     }
 
-    public UpdateDomain(String title, String username, String avatar, Date indat, Date updat) {
+    public UpdateDomain(
+            String title,
+            String username,
+            Date indat,
+            Date updat) {
         this.title = title;
         this.username = username;
-        this.avatar = avatar;
         this.indat = indat;
         this.updat = updat;
     }
@@ -50,6 +56,7 @@ public class UpdateDomain {
         this.title = title;
         this.updat = updat;
     }
+
 
 
     public String getIdcolle() {
@@ -102,12 +109,6 @@ public class UpdateDomain {
         this.username = username;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
 
 }

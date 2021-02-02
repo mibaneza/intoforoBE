@@ -8,9 +8,11 @@ import com.ard333.springbootwebfluxjjwt.security.JWTUtil;
 import com.ard333.springbootwebfluxjjwt.security.PBKDF2Encoder;
 import com.ard333.springbootwebfluxjjwt.security.model.Role;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import com.ard333.springbootwebfluxjjwt.security.model.UserMapperModel;
+import com.ard333.springbootwebfluxjjwt.service.util.Getdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,8 @@ import reactor.core.publisher.Mono;
 public class UserService {
 	
 	// this is just an example, you can load the user from the database from the repository
-
+	@Autowired
+	Getdate getdate;
 	@Autowired
 	private JWTUtil jwtUtil;
 
@@ -36,13 +39,26 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
+	public Date datByUser(String id) {
+		return userRepository.findByUsername(id).map( (u) -> {
+			return u.getIndate();
 
+		}).block();
+	}
+	public Mono<UserDomain> findUsername(String id){
+		return userRepository.findByUsername(id);
+	}
 	public Mono<User> TokenFindByUsername(com.ard333.springbootwebfluxjjwt.security.discord.model.User userDiscord) {
-		return userRepository.findByUsername(userDiscord.getId().toString())
+		return userRepository.findByUsername(userDiscord.getId())
+				.map((us) -> {
+					us.setAvatar(userDiscord.getAvatar());
+					return us;
+				})
+				.flatMap(userRepository::save)
 				.map((user) ->  new User(user.getUsername()+","+user.getAvatar(),user.getPassword(),user.getEnabled(),user.getRoles()));
 	}
-	public Mono<UserDomain> register(com.ard333.springbootwebfluxjjwt.security.discord.model.User userDiscord) {
 
+	public Mono<UserDomain> register(com.ard333.springbootwebfluxjjwt.security.discord.model.User userDiscord) {
 		return 	userRepository.save(new UserDomain(
 				userDiscord.getId(),
 				passwordEncoder.encode(userDiscord.getEmail()),
@@ -52,10 +68,12 @@ public class UserService {
 				userDiscord.getUsername(),
 				userDiscord.getFullUsername(),
 				Arrays.asList(Role.ROLE_USER),
-				Boolean.TRUE
+				Boolean.TRUE,
+				getdate.date(),
+				(long) 0,
+				(long) 0
 		));
 	}
-
 
 
 	public Mono<UserMapperModel> ifRegister(com.ard333.springbootwebfluxjjwt.security.discord.model.User userDiscord) {
@@ -68,7 +86,10 @@ public class UserService {
 				userDiscord.getUsername(),
 				userDiscord.getFullUsername(),
 				Arrays.asList(Role.ROLE_USER),
-				Boolean.TRUE
+				Boolean.TRUE,
+				getdate.date(),
+				(long) 0,
+				(long) 0
 		)).map((user) -> new UserMapperModel(
 				userDiscord,
 				Arrays.asList(Role.ROLE_USER),
@@ -101,4 +122,31 @@ public class UserService {
 	public Flux<UserDomain> getUSer() {
 		return userRepository.findAll();
 	}
+
+	public UserDomain findByUsernameUpdateComentPost(String iduser, String ga) {
+		return userRepository.findByUsername(iduser)
+				.map((us) -> {
+					switch (ga){
+						case "comment":
+							us.setQuantitycomment(us.getQuantitycomment()+1);
+							return us;
+						case "post":
+							us.setQuantitypost(us.getQuantitypost()+1);
+							return us;
+						default:
+							us.setQuantitycomment(us.getQuantitycomment()+1);
+							us.setQuantitypost(us.getQuantitypost()+1);
+							return us;
+					}
+				})
+				.flatMap(userRepository::save)
+				.block();
+	}
+
+
+
+
+
+
+
 }

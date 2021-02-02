@@ -1,9 +1,11 @@
 package com.ard333.springbootwebfluxjjwt.domain;
 
 import com.ard333.springbootwebfluxjjwt.security.model.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
 import java.util.List;
 
 @Document(collection = "User")
@@ -13,6 +15,7 @@ public class UserDomain {
 
     private String username;
 
+    @JsonIgnore
     private String password;
 
     private String avatar;
@@ -27,12 +30,19 @@ public class UserDomain {
 
     private List<Role> roles;
 
+    private Long quantitypost;
+
+    private Long quantitycomment;
+
     private Boolean enabled ;
+
+    private Date indate;
 
     public UserDomain() {
     }
 
-    public UserDomain(String username, String password, String avatar, Boolean verified, String emaill, String name, String fullUsername, List<Role> roles, Boolean enabled) {
+    public UserDomain(String username, String password, String avatar, Boolean verified,
+                      String emaill, String name, String fullUsername, List<Role> roles, Boolean enabled,Date indate, Long quantitypost, Long quantitycomment) {
         this.username = username;
         this.password = password;
         this.avatar = avatar;
@@ -42,6 +52,25 @@ public class UserDomain {
         this.fullUsername = fullUsername;
         this.roles = roles;
         this.enabled = enabled;
+        this.indate = indate;
+        this.quantitypost = quantitypost;
+        this.quantitycomment = quantitycomment;
+    }
+
+    public Long getQuantitypost() {
+        return quantitypost;
+    }
+
+    public void setQuantitypost(Long quantitypost) {
+        this.quantitypost = quantitypost;
+    }
+
+    public Long getQuantitycomment() {
+        return quantitycomment;
+    }
+
+    public void setQuantitycomment(Long quantitycomment) {
+        this.quantitycomment = quantitycomment;
     }
 
     public String getId() {
@@ -118,6 +147,14 @@ public class UserDomain {
 
     public Boolean getEnabled() {
         return enabled;
+    }
+
+    public Date getIndate() {
+        return indate;
+    }
+
+    public void setIndate(Date indate) {
+        this.indate = indate;
     }
 
     public void setEnabled(Boolean enabled) {

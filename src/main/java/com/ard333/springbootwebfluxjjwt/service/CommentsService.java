@@ -26,26 +26,45 @@ public class CommentsService {
     @Autowired
     PostRepository postRepository;
 
+    @Autowired
+    private UserService userService;
+
     public Flux<CommentsDomain> findAllComments(){
         return commentsRepository.findAll();
     }
     public Flux<CommentsDomain> findAllCommentsAndPost(String idpost){
         return commentsRepository.findByComentpostOrderByIndat(idpost);
     }
+    public Mono<Long> countByNickuserComents(String iduser){
+        return commentsRepository.countByNickuser(iduser);
+    }
+    public Mono<Long> countByNickuserPost(String iduser){
+        return postRepository.countByIduser(iduser);
+    }
+
 
     public Mono<CommentsDomain> saveCommentUser(CommentsDomain commentsDomain, String idpost, String iduser, String avatar){
         return postRepository.findByIdpostAndEst(idpost,true)
                 .map((cd) ->
-            new CommentsDomain(commentsDomain.getComment(),cd.getIdpost(),iduser,avatar,getdate.date())
-        ).flatMap(commentsRepository::save);
+                new CommentsDomain(commentsDomain.getComment(),cd.getIdpost(),iduser,avatar,getdate.date())
+                )
+                .flatMap(commentsRepository::save)
+                .map((awd) -> userService.findByUsernameUpdateComentPost(iduser,"comment"))
+                .map((awd) -> new CommentsDomain(commentsDomain.getComment(),idpost,iduser,avatar,getdate.date()))
+                ;
     }
 
     public Mono<CommentsDomain> saveCommentAdmin(CommentsDomain commentsDomain, String idpost, String iduser, String avatar){
         return postRepository.findById(idpost)
                 .map((cd) ->
                         new CommentsDomain(commentsDomain.getComment(),cd.getIdpost(),iduser,avatar,getdate.date())
-                ).flatMap(commentsRepository::save);
+                )
+                .flatMap(commentsRepository::save)
+                .map((awd) -> userService.findByUsernameUpdateComentPost(iduser,"comment"))
+                .map((awd) -> new CommentsDomain(commentsDomain.getComment(),idpost,iduser,avatar,getdate.date()))
+                ;
     }
+
 
     public Mono<CommentsDomain> findId(String id){
         return commentsRepository.findById(id);

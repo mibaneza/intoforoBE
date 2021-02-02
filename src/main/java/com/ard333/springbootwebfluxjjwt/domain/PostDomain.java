@@ -22,9 +22,8 @@ public class PostDomain {
 
     private Boolean est;
 
-    private UpdateDomain indomains;
 
-    private List<UpdateDomain> updomains = new ArrayList<>();
+
 
  //   private String idupdate;
 
@@ -37,14 +36,14 @@ public class PostDomain {
         this.containerhtml = containerhtml;
     }
 
-    public PostDomain(String iduser, String titlePost, String containerhtml, String idcategoria, Boolean est, UpdateDomain indomains) {
+    public PostDomain(String iduser, String titlePost, String containerhtml, String idcategoria, Boolean est) {
         this.iduser = iduser;
         this.titlePost = titlePost;
         this.containerhtml = containerhtml;
         this.idcategoria = idcategoria;
         this.est = est;
-        this.indomains = indomains;
     }
+
 
     public Boolean getEst() {
         return est;
@@ -54,21 +53,9 @@ public class PostDomain {
         this.est = est;
     }
 
-    public UpdateDomain getIndomains() {
-        return indomains;
-    }
 
-    public void setIndomains(UpdateDomain indomains) {
-        this.indomains = indomains;
-    }
 
-    public List<UpdateDomain> getUpdomains() {
-        return updomains;
-    }
 
-    public void setUpdomains(List<UpdateDomain> updomains) {
-        this.updomains = updomains;
-    }
 
     public String getIdcategoria() {
         return idcategoria;

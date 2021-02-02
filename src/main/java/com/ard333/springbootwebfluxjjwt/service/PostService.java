@@ -3,6 +3,7 @@ package com.ard333.springbootwebfluxjjwt.service;
 import com.ard333.springbootwebfluxjjwt.domain.CategoriesDomain;
 import com.ard333.springbootwebfluxjjwt.domain.PostDomain;
 import com.ard333.springbootwebfluxjjwt.domain.UpdateDomain;
+import com.ard333.springbootwebfluxjjwt.model.Duall;
 import com.ard333.springbootwebfluxjjwt.repository.CategoriesRepository;
 import com.ard333.springbootwebfluxjjwt.repository.PostRepository;
 import com.ard333.springbootwebfluxjjwt.repository.UpdatePostRepository;
@@ -29,7 +30,6 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
-
     @Autowired
     private UpdatePostRepository updatePostRepository;
 
@@ -42,10 +42,93 @@ public class PostService {
     @Autowired
     private UpdatePostService UpdatetService;
 
+    @Autowired
+    private UserService userService;
+
     public Flux<PostDomain> findAllPosts(){
         return postRepository.findAll();
     }
 
+    public Mono<PostDomain> savePost(String id , PostDomain postDomain, Principal principal) {
+        String[] arrSplit = principal.getName().split(",");
+        return categoriesRepository.findById(id)
+                .map((c) -> new PostDomain(
+                            arrSplit[0],
+                            postDomain.getTitlePost(),
+                            postDomain.getContainerhtml(),
+                            c.getIdcategories(),
+                            postDomain.getEst()
+                    )
+                )
+                .flatMap(postRepository::save)
+                .map((p) -> new UpdateDomain(
+                            "INICIADO",
+                            arrSplit[0],
+                            p.getIdpost(),
+                            getdate.date(),
+                            getdate.date()
+                    )
+                )
+                .flatMap(updatePostRepository::save)
+                .map((tw) -> userService.findByUsernameUpdateComentPost(arrSplit[0],"post"))
+                .map((ga) -> new PostDomain(
+                            arrSplit[0],
+                            postDomain.getTitlePost(),
+                            postDomain.getContainerhtml()
+                    )
+                );
+
+
+    }
+
+    public Mono<PostDomain>  updatePostUser(String idpost , PostDomain postDomain, Principal principal){
+        String[] arrSplit = principal.getName().split(",");
+        return  postRepository.findByIdpostAndIduser(idpost,arrSplit[0])
+                .map( (p) -> {
+                    p.setTitlePost(postDomain.getTitlePost());
+                    p.setContainerhtml(postDomain.getContainerhtml());
+                    return p;
+                })
+                .flatMap(postRepository::save)
+                .map((awd) -> new Duall(arrSplit[0],awd.getIdpost()))
+                .flatMap(UpdatetService::upUpdateDomain)
+                .map((upps) -> new PostDomain(
+                                arrSplit[0],
+                                postDomain.getTitlePost(),
+                                postDomain.getContainerhtml()
+                        ) )
+                ;
+    }
+
+    public Mono<PostDomain> updatePostAdmin(String idpost , PostDomain postDomain, Principal principal){
+        String[] arrSplit = principal.getName().split(",");
+        return postRepository.findById(idpost)
+                .map( (p) -> {
+                    p.setTitlePost(postDomain.getTitlePost());
+                    p.setContainerhtml(postDomain.getContainerhtml());
+                    p.setEst(postDomain.getEst());
+                    return p;
+                })
+                .flatMap(postRepository::save)
+                .map((awd) -> new Duall(awd.getIdpost(),arrSplit[0]))
+                .flatMap(UpdatetService::upUpdateDomain)
+                .map((upps) -> new PostDomain(
+                        arrSplit[0],
+                        postDomain.getTitlePost(),
+                        postDomain.getContainerhtml()
+                ));
+
+    }
+
+
+
+
+
+
+
+
+
+/*
 
     public Mono<PostDomain> savePost(String id , PostDomain postDomain, Principal principal) {
         return categoriesRepository.findById(id)
@@ -69,6 +152,7 @@ public class PostService {
 
 
     }
+
 
     public Mono<PostDomain>  updatePostUser(String idpost , PostDomain postDomain, Principal principal){
         String[] arrSplit = principal.getName().split(",");
@@ -120,7 +204,7 @@ public class PostService {
                     return p;
                 }).flatMap(postRepository::save);
     }
-
+*/
     public Mono<PostDomain> findId(String id){
         return postRepository.findById(id);
     }

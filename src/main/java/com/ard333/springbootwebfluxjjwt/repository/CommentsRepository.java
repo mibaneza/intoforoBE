@@ -11,4 +11,8 @@ import reactor.core.publisher.Mono;
 public interface CommentsRepository extends ReactiveMongoRepository<CommentsDomain, String> {
     Mono<CommentsDomain> findByNickuserAndComentpostAndIdcoment(String iduser , String idpost, String idcomment);
     Flux<CommentsDomain> findByComentpostOrderByIndat(String idpost);
+
+
+    Mono<Long> countByNickuser(String iduser);
+
 }

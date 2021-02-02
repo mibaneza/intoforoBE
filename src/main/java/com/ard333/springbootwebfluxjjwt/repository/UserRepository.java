@@ -11,4 +11,5 @@ public interface UserRepository extends ReactiveMongoRepository<UserDomain, Stri
     Mono<UserDomain> findByUsername(String username);
     Mono<Boolean> existsByUsername(String username);
     Flux<UserDomain> findByRoles(String username);
+
 }
