@@ -20,5 +20,10 @@ public class Getdate {
         }
         return dates;
     }
+    public String converter(Date id) {
+        SimpleDateFormat dateFormatter = new SimpleDateFormat(strDateFormat);
+        String formattedDate = dateFormatter.format(id);
+        return formattedDate;
+    }
 
 }

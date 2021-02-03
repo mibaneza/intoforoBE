@@ -4,6 +4,7 @@ import com.ard333.springbootwebfluxjjwt.domain.UserDomain;
 import com.ard333.springbootwebfluxjjwt.security.model.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -23,12 +24,12 @@ public class UserInfo {
 
     private Long quantitycomment;
 
-    private Date indate;
+    private String indate;
 
     public UserInfo() {
     }
 
-    public UserInfo(UserDomain user) {
+    public UserInfo(UserDomain user, String date) {
         this.username = user.getUsername();
         this.avatar = user.getAvatar();
         this.name = user.getName();
@@ -36,7 +37,7 @@ public class UserInfo {
         this.roles = user.getRoles();
         this.quantitypost = user.getQuantitypost();
         this.quantitycomment = user.getQuantitycomment();
-        this.indate = user.getIndate();
+        this.indate = date;
     }
     public String getUsername() {
         return username;
@@ -94,11 +95,25 @@ public class UserInfo {
         this.quantitycomment = quantitycomment;
     }
 
-    public Date getIndate() {
+    public String getIndate() {
         return indate;
     }
 
-    public void setIndate(Date indate) {
+    public void setIndate(String indate) {
         this.indate = indate;
+    }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "username='" + username + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", name='" + name + '\'' +
+                ", fullUsername='" + fullUsername + '\'' +
+                ", roles=" + roles +
+                ", quantitypost=" + quantitypost +
+                ", quantitycomment=" + quantitycomment +
+                ", indate=" + indate +
+                '}';
     }
 }
