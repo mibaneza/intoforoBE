@@ -9,6 +9,7 @@ import com.ard333.springbootwebfluxjjwt.repository.UpdatePostRepository;
 import com.ard333.springbootwebfluxjjwt.service.util.Getdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.security.Principal;
@@ -40,7 +41,9 @@ public class UpdatePostService {
                         .flatMap(updatePostRepository::save);
 
     }
-
+    public Flux<UpdateDomain> findByIdcolleOrderByUpdatAsc(String idcoole){
+        return updatePostRepository.findByIdcolleOrderByUpdatAsc(idcoole);
+    }
 
     public List<UpdateDomain> listUpDomain(List<UpdateDomain> updateDomains,String iduser){
         List<UpdateDomain> listupdateDomains = new ArrayList<>();

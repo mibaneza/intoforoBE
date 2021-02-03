@@ -33,7 +33,6 @@ public class PostREST {
     @GetMapping(value = "/api/web/posts")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public Flux<PostDomain> readAsll(){
-
         return postService.findAllPosts();
     }
 
