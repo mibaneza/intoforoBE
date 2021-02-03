@@ -3,6 +3,7 @@ package com.ard333.springbootwebfluxjjwt.service;
 
 import com.ard333.springbootwebfluxjjwt.domain.UserDomain;
 import com.ard333.springbootwebfluxjjwt.model.User;
+import com.ard333.springbootwebfluxjjwt.model.UserInfo;
 import com.ard333.springbootwebfluxjjwt.repository.UserRepository;
 import com.ard333.springbootwebfluxjjwt.security.JWTUtil;
 import com.ard333.springbootwebfluxjjwt.security.PBKDF2Encoder;
@@ -45,8 +46,8 @@ public class UserService {
 
 		}).block();
 	}
-	public Mono<UserDomain> findUsername(String id){
-		return userRepository.findByUsername(id);
+	public Mono<UserInfo> findUsername(String id){
+		return userRepository.findByUsername(id).map((userDomain) -> new UserInfo(userDomain));
 	}
 	public Mono<User> TokenFindByUsername(com.ard333.springbootwebfluxjjwt.security.discord.model.User userDiscord) {
 		return userRepository.findByUsername(userDiscord.getId())
