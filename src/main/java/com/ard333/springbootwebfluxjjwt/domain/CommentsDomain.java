@@ -1,6 +1,7 @@
 package com.ard333.springbootwebfluxjjwt.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.Date;
 public class CommentsDomain {
     @Id
     private String idcoment;
+
 
     private String comment;
 

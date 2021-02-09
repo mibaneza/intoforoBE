@@ -1,6 +1,7 @@
 package com.ard333.springbootwebfluxjjwt.rest;
 
 import com.ard333.springbootwebfluxjjwt.domain.CategoriesDomain;
+import com.ard333.springbootwebfluxjjwt.model.CategoryModel;
 import com.ard333.springbootwebfluxjjwt.service.CategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class CategoriesREST {
@@ -20,6 +22,11 @@ public class CategoriesREST {
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public Flux<CategoriesDomain> readAll(){
         return categoriesService.findAllCategories();
+    }
+    @GetMapping(value = "/api/web/categoriaslist")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public Mono<List<CategoryModel>> readAlsl(){
+        return categoriesService.findAllCategorieslist();
     }
 
     @PostMapping(value = "/resource/categoria")

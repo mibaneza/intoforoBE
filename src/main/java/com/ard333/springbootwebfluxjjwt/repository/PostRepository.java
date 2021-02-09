@@ -12,4 +12,6 @@ public interface PostRepository extends ReactiveMongoRepository<PostDomain, Stri
     Mono<PostDomain> findByIdpostAndEst(String idpost,Boolean est);
 
     Mono<Long> countByIduser(String iduser);
+
+    Flux<PostDomain> findByIdcategoria(String cate);
 }

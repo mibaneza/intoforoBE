@@ -12,6 +12,7 @@ public interface CommentsRepository extends ReactiveMongoRepository<CommentsDoma
     Mono<CommentsDomain> findByNickuserAndComentpostAndIdcoment(String iduser , String idpost, String idcomment);
     Flux<CommentsDomain> findByComentpostOrderByIndat(String idpost);
 
+    Mono<Long> countByComentpost(String idpost);
 
     Mono<Long> countByNickuser(String iduser);
 

@@ -46,6 +46,9 @@ public class UserService {
 
 		}).block();
 	}
+	public Mono<UserDomain> findid(String id){
+		return userRepository.findByUsername(id);
+	}
 	public Mono<UserInfo> findUsername(String id){
 		return userRepository.findByUsername(id)
 				.map((userDomain) -> new UserInfo(userDomain,getdate.converter(userDomain.getIndate())));

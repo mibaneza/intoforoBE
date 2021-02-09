@@ -35,6 +35,11 @@ public class PostREST {
     public Flux<PostDomain> readAsll(){
         return postService.findAllPosts();
     }
+    @GetMapping(value = "/api/web/posts/{id}")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public Flux<PostDomain> readAsllCate(@PathVariable("id") String id){
+        return postService.findAllPostCategories(id);
+    }
 
     @PostMapping(value = "/resource/post/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")

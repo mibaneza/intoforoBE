@@ -40,15 +40,23 @@ public class PostService {
     private CategoriesRepository categoriesRepository;
 
     @Autowired
+    private CategoriesService categoriesService;
+
+    @Autowired
     private UpdatePostService UpdatetService;
 
     @Autowired
     private UserService userService;
+    public Mono<PostDomain> findId(String id){
+        return postRepository.findById(id);
+    }
 
     public Flux<PostDomain> findAllPosts(){
         return postRepository.findAll();
     }
-
+    public Flux<PostDomain> findAllPostCategories(String cate){
+        return postRepository.findByIdcategoria(cate);
+    }
     public Mono<PostDomain> savePost(String id , PostDomain postDomain, Principal principal) {
         String[] arrSplit = principal.getName().split(",");
         return categoriesRepository.findById(id)
@@ -57,10 +65,14 @@ public class PostService {
                             postDomain.getTitlePost(),
                             postDomain.getContainerhtml(),
                             c.getIdcategories(),
-                            postDomain.getEst()
+                           true,
+                           "awdawd",
+                            postDomain.getLinktitle()
                     )
                 )
                 .flatMap(postRepository::save)
+                .map(c -> new Duall(id,c.getIdpost()))
+                .flatMap(categoriesService::updateCategoriePost)
                 .map((p) -> new UpdateDomain(
                             "INICIADO",
                             arrSplit[0],
@@ -70,6 +82,19 @@ public class PostService {
                     )
                 )
                 .flatMap(updatePostRepository::save)
+                .map((c) -> new PostDomain(
+                                c.getIdcolle(),
+                                arrSplit[0],
+                                postDomain.getLinktitle(),
+                                postDomain.getTitlePost(),
+                                postDomain.getContainerhtml(),
+                                id,
+                                true,
+                                c.getIdupdateposts()
+
+                        )
+                )
+                .flatMap(postRepository::save)
                 .map((tw) -> userService.findByUsernameUpdateComentPost(arrSplit[0],"post"))
                 .map((ga) -> new PostDomain(
                             arrSplit[0],
@@ -90,13 +115,13 @@ public class PostService {
                     return p;
                 })
                 .flatMap(postRepository::save)
+                .map(c -> new Duall(c.getIdcategoria(),c.getIdpost()))
+                .flatMap(categoriesService::updateCategoriePost)
                 .map((awd) -> new Duall(arrSplit[0],awd.getIdpost()))
                 .flatMap(UpdatetService::upUpdateDomain)
-                .map((upps) -> new PostDomain(
-                                arrSplit[0],
-                                postDomain.getTitlePost(),
-                                postDomain.getContainerhtml()
-                        ) )
+                .map((upps) -> updatePostdate(upps.getIdcolle(),upps.getIdupdateposts()))
+                //.map((upps) -> new Duall(upps.getIdcolle(),upps.getIdupdateposts()))
+                //.flatMap(UpdatetService::updatePostdate)
                 ;
     }
 
@@ -110,17 +135,26 @@ public class PostService {
                     return p;
                 })
                 .flatMap(postRepository::save)
+                .map(c -> new Duall(c.getIdcategoria(),c.getIdpost()))
+                .flatMap(categoriesService::updateCategoriePost)
                 .map((awd) -> new Duall(awd.getIdpost(),arrSplit[0]))
                 .flatMap(UpdatetService::upUpdateDomain)
-                .map((upps) -> new PostDomain(
-                        arrSplit[0],
-                        postDomain.getTitlePost(),
-                        postDomain.getContainerhtml()
-                ));
+                .map((upps) -> updatePostdate(upps.getIdcolle(),upps.getIdupdateposts()))
+                //.map((upps) -> new Duall(upps.getIdcolle(),upps.getIdupdateposts()))
+                //.flatMap(UpdatetService::updatePostdate)
+                ;
 
     }
 
-
+    public PostDomain  updatePostdate(String idpost ,String idupdate ){
+        return  postRepository.findById(idpost )
+                .map( (p) -> {
+                    p.setIdupdate(idupdate );
+                    return p;
+                })
+                .flatMap(postRepository::save).block()
+                ;
+    }
 
 
 
@@ -205,9 +239,7 @@ public class PostService {
                 }).flatMap(postRepository::save);
     }
 */
-    public Mono<PostDomain> findId(String id){
-        return postRepository.findById(id);
-    }
+
 
     public Mono<Void> deletePostAdminUser(String id, Principal principal){
         String[] arrSplit = principal.getName().split(",");

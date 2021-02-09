@@ -41,6 +41,9 @@ public class CommentsService {
     public Mono<Long> countByNickuserPost(String iduser){
         return postRepository.countByIduser(iduser);
     }
+    public Long countByPost(String idpost){
+        return commentsRepository.countByComentpost(idpost).block();
+    }
 
 
     public Mono<CommentsDomain> saveCommentUser(CommentsDomain commentsDomain, String idpost, String iduser, String avatar){

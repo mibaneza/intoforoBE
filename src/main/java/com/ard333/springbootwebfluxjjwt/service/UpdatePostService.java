@@ -41,6 +41,9 @@ public class UpdatePostService {
                         .flatMap(updatePostRepository::save);
 
     }
+    public String findByIdTitle(String idcoole){
+        return updatePostRepository.findById(idcoole).map(UpdateDomain::getTitle).block();
+    }
     public Flux<UpdateDomain> findByIdcolleOrderByUpdatAsc(String idcoole){
         return updatePostRepository.findByIdcolleOrderByUpdatAsc(idcoole);
     }
@@ -95,7 +98,15 @@ public class UpdatePostService {
                        getdate.date()))
                .flatMap(updatePostRepository::save);
     }
-
+    public Mono<PostDomain>  updatePostdate(Duall duall ){
+        return  postRepository.findById(duall.getDualv1())
+                .map( (p) -> {
+                    p.setIdupdate(duall.getDualv2());
+                    return p;
+                })
+                .flatMap(postRepository::save)
+                ;
+    }
         /*
 
         return updatePostRepository.findByIdcolleAndUsernameAndTitle(idpost,iduser,"ACTUALIZADO")

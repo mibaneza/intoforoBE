@@ -1,6 +1,7 @@
 package com.ard333.springbootwebfluxjjwt.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,6 +15,9 @@ public class PostDomain {
 
     private String iduser;
 
+    @Indexed
+    private String linktitle;
+
     private String titlePost;
 
     private String containerhtml;
@@ -22,16 +26,46 @@ public class PostDomain {
 
     private Boolean est;
 
-
-
-
- //   private String idupdate;
+    private String idupdate;
 
     public PostDomain() {
     }
 
     public PostDomain(String iduser, String titlePost, String containerhtml) {
         this.iduser = iduser;
+        this.titlePost = titlePost;
+        this.containerhtml = containerhtml;
+    }
+
+    public PostDomain( String iduser, String titlePost, String containerhtml, String idcategoria, Boolean est, String idupdate, String linktitle) {
+        this.iduser = iduser;
+        this.titlePost = titlePost;
+        this.containerhtml = containerhtml;
+        this.idcategoria = idcategoria;
+        this.est = est;
+        this.idupdate = idupdate;
+        this.linktitle = linktitle;
+    }
+
+    public PostDomain(String idpost, String idupdate, String titlePost, String containerhtml) {
+        this.idpost = idpost;
+        this.idupdate = idupdate;
+        this.titlePost = titlePost;
+        this.containerhtml = containerhtml;
+    }
+
+    public PostDomain(String idpost, String iduser, String linktitle, String titlePost, String containerhtml, String idcategoria, Boolean est, String idupdate) {
+        this.idpost = idpost;
+        this.iduser = iduser;
+        this.titlePost = titlePost;
+        this.containerhtml = containerhtml;
+        this.idcategoria = idcategoria;
+        this.est = est;
+        this.idupdate = idupdate;
+        this.linktitle = linktitle;
+    }
+
+    public PostDomain(String titlePost, String containerhtml) {
         this.titlePost = titlePost;
         this.containerhtml = containerhtml;
     }
@@ -44,6 +78,13 @@ public class PostDomain {
         this.est = est;
     }
 
+    public String getLinktitle() {
+        return linktitle;
+    }
+
+    public void setLinktitle(String linktitle) {
+        this.linktitle = linktitle;
+    }
 
     public Boolean getEst() {
         return est;
@@ -54,8 +95,13 @@ public class PostDomain {
     }
 
 
+    public String getIdupdate() {
+        return idupdate;
+    }
 
-
+    public void setIdupdate(String idupdate) {
+        this.idupdate = idupdate;
+    }
 
     public String getIdcategoria() {
         return idcategoria;
