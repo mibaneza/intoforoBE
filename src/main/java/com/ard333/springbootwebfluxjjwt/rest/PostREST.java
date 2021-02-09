@@ -1,6 +1,7 @@
 package com.ard333.springbootwebfluxjjwt.rest;
 
 import com.ard333.springbootwebfluxjjwt.domain.PostDomain;
+import com.ard333.springbootwebfluxjjwt.domain.UserDomain;
 import com.ard333.springbootwebfluxjjwt.repository.UpdatePostRepository;
 import com.ard333.springbootwebfluxjjwt.service.CategoriesService;
 import com.ard333.springbootwebfluxjjwt.service.PostService;
@@ -51,7 +52,7 @@ public class PostREST {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Mono<PostDomain> createAdminPost(@PathVariable("id") String id, Principal principal,
-                                       @RequestBody  PostDomain postDomain){
+                                            @RequestBody  PostDomain postDomain){
         return postService.saveAdminPost(id,postDomain,principal);
     }
 

@@ -2,6 +2,7 @@ package com.ard333.springbootwebfluxjjwt.service;
 
 import com.ard333.springbootwebfluxjjwt.domain.CategoriesDomain;
 import com.ard333.springbootwebfluxjjwt.domain.CommentsDomain;
+import com.ard333.springbootwebfluxjjwt.model.Duall;
 import com.ard333.springbootwebfluxjjwt.repository.CategoriesRepository;
 import com.ard333.springbootwebfluxjjwt.repository.CommentsRepository;
 import com.ard333.springbootwebfluxjjwt.repository.PostRepository;
@@ -52,7 +53,8 @@ public class CommentsService {
                 new CommentsDomain(commentsDomain.getComment(),cd.getIdpost(),iduser,avatar,getdate.date())
                 )
                 .flatMap(commentsRepository::save)
-                .map((awd) -> userService.findByUsernameUpdateComentPost(iduser,"comment"))
+                .map((tw) -> new Duall( iduser,"post"))
+                .flatMap(userService::findByUsernameUpdateComentPost)
                 .map((awd) -> new CommentsDomain(commentsDomain.getComment(),idpost,iduser,avatar,getdate.date()))
                 ;
     }
@@ -63,7 +65,8 @@ public class CommentsService {
                         new CommentsDomain(commentsDomain.getComment(),cd.getIdpost(),iduser,avatar,getdate.date())
                 )
                 .flatMap(commentsRepository::save)
-                .map((awd) -> userService.findByUsernameUpdateComentPost(iduser,"comment"))
+                .map((tw) -> new Duall( iduser,"post"))
+                .flatMap(userService::findByUsernameUpdateComentPost)
                 .map((awd) -> new CommentsDomain(commentsDomain.getComment(),idpost,iduser,avatar,getdate.date()))
                 ;
     }

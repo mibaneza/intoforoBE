@@ -3,6 +3,7 @@ package com.ard333.springbootwebfluxjjwt.service;
 import com.ard333.springbootwebfluxjjwt.domain.CategoriesDomain;
 import com.ard333.springbootwebfluxjjwt.domain.PostDomain;
 import com.ard333.springbootwebfluxjjwt.domain.UpdateDomain;
+import com.ard333.springbootwebfluxjjwt.domain.UserDomain;
 import com.ard333.springbootwebfluxjjwt.model.Duall;
 import com.ard333.springbootwebfluxjjwt.repository.CategoriesRepository;
 import com.ard333.springbootwebfluxjjwt.repository.PostRepository;
@@ -97,7 +98,8 @@ public class PostService {
                         )
                 )
                 .flatMap(postRepository::save)
-                .map((tw) -> userService.findByUsernameUpdateComentPost(arrSplit[0],"post"))
+                .map((tw) -> new Duall( arrSplit[0],"post"))
+                .flatMap(userService::findByUsernameUpdateComentPost)
                 .map((ga) -> new PostDomain(
                             arrSplit[0],
                             postDomain.getTitlePost(),
@@ -147,7 +149,8 @@ public class PostService {
                         )
                 )
                 .flatMap(postRepository::save)
-                .map((tw) -> userService.findByUsernameUpdateComentPost(arrSplit[0],"post"))
+                .map((tw) -> new Duall( arrSplit[0],"post"))
+                .flatMap(userService::findByUsernameUpdateComentPost)
                 .map((ga) -> new PostDomain(
                                 arrSplit[0],
                                 postDomain.getTitlePost(),

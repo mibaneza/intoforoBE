@@ -2,6 +2,7 @@ package com.ard333.springbootwebfluxjjwt.service;
 
 
 import com.ard333.springbootwebfluxjjwt.domain.UserDomain;
+import com.ard333.springbootwebfluxjjwt.model.Duall;
 import com.ard333.springbootwebfluxjjwt.model.User;
 import com.ard333.springbootwebfluxjjwt.model.UserInfo;
 import com.ard333.springbootwebfluxjjwt.repository.UserRepository;
@@ -129,10 +130,10 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
-	public UserDomain findByUsernameUpdateComentPost(String iduser, String ga) {
-		return userRepository.findByUsername(iduser)
+	public Mono<UserDomain> findByUsernameUpdateComentPost(Duall duall) {
+		return userRepository.findByUsername(duall.getDualv1())
 				.map((us) -> {
-					switch (ga){
+					switch (duall.getDualv2()){
 						case "comment":
 							us.setQuantitycomment(us.getQuantitycomment()+1);
 							return us;
@@ -146,7 +147,7 @@ public class UserService {
 					}
 				})
 				.flatMap(userRepository::save)
-				.block();
+				;
 	}
 
 
