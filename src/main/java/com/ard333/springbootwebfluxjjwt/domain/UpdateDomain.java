@@ -17,6 +17,10 @@ public class UpdateDomain {
 
     private String username;
 
+    private String avatar;
+
+    private String name;
+
     private String idcolle;
 
     private Date indat;
@@ -28,6 +32,16 @@ public class UpdateDomain {
     public UpdateDomain() {
     }
 
+    public UpdateDomain(String title, String username, String avatar, String name, String idcolle, Date indat, Date updat) {
+        this.title = title;
+        this.username = username;
+        this.avatar = avatar;
+        this.name = name;
+        this.idcolle = idcolle;
+        this.indat = indat;
+        this.updat = updat;
+    }
+/*
     public UpdateDomain(
             String title,
             String username,
@@ -56,8 +70,23 @@ public class UpdateDomain {
         this.title = title;
         this.updat = updat;
     }
+*/
 
+    public String getAvatar() {
+        return avatar;
+    }
 
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getIdcolle() {
         return idcolle;

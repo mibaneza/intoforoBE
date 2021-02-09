@@ -27,7 +27,7 @@ public class UpdatePostService {
     Getdate getdate;
     @Autowired
     private UpdatePostRepository updatePostRepository;
-
+/*
     public Mono<?> findColleUpdate(String iduser,String idpost){
         return  updatePostRepository.findByIdcolleAndUsernameAndTitle(idpost,iduser,"ACTUALIZADO").map((up) -> {
                     up.setUpdat(getdate.date());
@@ -40,14 +40,14 @@ public class UpdatePostService {
                         getdate.date()))
                         .flatMap(updatePostRepository::save);
 
-    }
+    }*/
     public String findByIdTitle(String idcoole){
         return updatePostRepository.findById(idcoole).map(UpdateDomain::getTitle).block();
     }
     public Flux<UpdateDomain> findByIdcolleOrderByUpdatAsc(String idcoole){
         return updatePostRepository.findByIdcolleOrderByUpdatAsc(idcoole);
     }
-
+/*
     public List<UpdateDomain> listUpDomain(List<UpdateDomain> updateDomains,String iduser){
         List<UpdateDomain> listupdateDomains = new ArrayList<>();
 
@@ -83,8 +83,9 @@ public class UpdatePostService {
             }
         }
         return update;
-    }
+    }*/
     public Mono<UpdateDomain> upUpdateDomain(Duall duall){
+        String[] arrSplit = duall.getDualv1().split(",");
        return  updatePostRepository.findByIdcolleAndUsernameAndTitle(duall.getDualv2(),duall.getDualv1(),"ACTUALIZADO")
                .map((upU) -> {
                    upU.setUpdat(getdate.date());
@@ -92,7 +93,9 @@ public class UpdatePostService {
                    })
                .defaultIfEmpty(new UpdateDomain(
                        "ACTUALIZADO",
-                       duall.getDualv1(),
+                       arrSplit[0],
+                       arrSplit[1],
+                       arrSplit[2],
                        duall.getDualv2(),
                        getdate.date(),
                        getdate.date()))

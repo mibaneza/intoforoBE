@@ -28,40 +28,50 @@ public class CommentREST {
         return commentsService.findAllCommentsAndPost(id);
     }
 
-    @PostMapping(value = "/resource/comment/{id}")
+    @PostMapping(value = "/resource/us/comment/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Mono<CommentsDomain> createComment(@PathVariable("id") String id, Principal principal,
+    public Mono<CommentsDomain> createUserComment(@PathVariable("id") String id, Principal principal,
                                          @RequestBody @Valid CommentsDomain commentsDomain){
         String[] arrSplit = principal.getName().split(",");
         return commentsService.saveCommentUser(commentsDomain, id, arrSplit[0], arrSplit[1]);
     }
-/*
-    @PutMapping(value = "/resource/post/{id}")
+    @PostMapping(value = "/resource/ad/comment/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public Mono<CommentsDomain> createAdminComment(@PathVariable("id") String id, Principal principal,
+                                                  @RequestBody @Valid CommentsDomain commentsDomain){
+        String[] arrSplit = principal.getName().split(",");
+        return commentsService.saveCommentAdmin(commentsDomain, id, arrSplit[0], arrSplit[1]);
+    }
+
+    @PutMapping(value = "/resource/us/comment/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Mono<?> updatePost(@PathVariable("id") String id,
-                              @RequestBody @Valid PostDomain postDomain, Principal principal){
-        return commentsService.updatePostUser(id,postDomain,principal);
+                              @RequestBody @Valid CommentsDomain commentsDomain, Principal principal){
+        return commentsService.updateCommentUser(id,commentsDomain,principal);
 
     }
 
-    @PutMapping(value = "/resource/ad/post/{id}")
+    @PutMapping(value = "/resource/ad/comment/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Mono<?> updatePostAdmin(@PathVariable("id") String id,
-                                   @RequestBody @Valid PostDomain postDomain, Principal principal){
-        return commentsService.updatePostAdmin(id,postDomain,principal);
+                                   @RequestBody @Valid CommentsDomain commentsDomain){
+        return commentsService.updateCommentAdmin(id,commentsDomain);
 
     }
 
-    @DeleteMapping(value = "/resource/comment/{id}")
+    @DeleteMapping(value = "/resource/comment/{id}/{idpost}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public Mono<Void> deletePost(@PathVariable("id") String id, Principal principal){
+    public Mono<Void> deletePost(@PathVariable("id") String id, @PathVariable("idpost") String idpost, Principal principal){
         String[] arrSplit = principal.getName().split(",");
-        return commentsService.deleteCommentsUser(id,arrSplit);
-    } */
+        return commentsService.deleteCommentsUser(id,idpost,arrSplit[0]);
+    }
+
+
     @DeleteMapping(value = "/resource/ad/comment/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)

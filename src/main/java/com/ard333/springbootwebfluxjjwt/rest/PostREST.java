@@ -1,7 +1,6 @@
 package com.ard333.springbootwebfluxjjwt.rest;
 
 import com.ard333.springbootwebfluxjjwt.domain.PostDomain;
-import com.ard333.springbootwebfluxjjwt.domain.UpdateDomain;
 import com.ard333.springbootwebfluxjjwt.repository.UpdatePostRepository;
 import com.ard333.springbootwebfluxjjwt.service.CategoriesService;
 import com.ard333.springbootwebfluxjjwt.service.PostService;
@@ -41,15 +40,22 @@ public class PostREST {
         return postService.findAllPostCategories(id);
     }
 
-    @PostMapping(value = "/resource/post/{id}")
+    @PostMapping(value = "/resource/us/post/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Mono<PostDomain> createPost(@PathVariable("id") String id, Principal principal,
+    public Mono<PostDomain> createUserPost(@PathVariable("id") String id, Principal principal,
                                                  @RequestBody  PostDomain postDomain){
-        return postService.savePost(id,postDomain,principal);
+        return postService.saveUserPost(id,postDomain,principal);
+    }
+    @PostMapping(value = "/resource/ad/post/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public Mono<PostDomain> createAdminPost(@PathVariable("id") String id, Principal principal,
+                                       @RequestBody  PostDomain postDomain){
+        return postService.saveAdminPost(id,postDomain,principal);
     }
 
-    @PutMapping(value = "/resource/post/{id}")
+    @PutMapping(value = "/resource/us/post/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Mono<PostDomain> updatePost(@PathVariable("id") String id,
@@ -67,7 +73,7 @@ public class PostREST {
 
     }
 
-    @DeleteMapping(value = "/resource/post/{id}")
+    @DeleteMapping(value = "/resource/us/post/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public Mono<Void> deletePost(@PathVariable("id") String id, Principal principal){

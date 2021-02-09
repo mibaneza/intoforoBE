@@ -85,7 +85,7 @@ public class CommentsService {
                 .flatMap(commentsRepository::save);
     }
 
-    public Mono<Void> deleteCommentsUser(String idpost, String idcomment, String iduser){
+    public Mono<Void> deleteCommentsUser(String idcomment, String idpost, String iduser){
 
         return  commentsRepository.findByNickuserAndComentpostAndIdcoment(iduser,idpost,idcomment)
                 .switchIfEmpty(Mono.error(Exception::new))

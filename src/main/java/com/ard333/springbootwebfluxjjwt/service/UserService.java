@@ -60,7 +60,8 @@ public class UserService {
 					return us;
 				})
 				.flatMap(userRepository::save)
-				.map((user) ->  new User(user.getUsername()+","+user.getAvatar(),user.getPassword(),user.getEnabled(),user.getRoles()));
+				.map((user) ->  new User(user.getUsername()+","+user.getAvatar()+","+userDiscord.getUsername(),
+						user.getPassword(),user.getEnabled(),user.getRoles()));
 	}
 
 	public Mono<UserDomain> register(com.ard333.springbootwebfluxjjwt.security.discord.model.User userDiscord) {
@@ -99,7 +100,7 @@ public class UserService {
 				userDiscord,
 				Arrays.asList(Role.ROLE_USER),
 				jwtUtil.generateToken(new User(
-						userDiscord.getId()+","+userDiscord.getAvatar(),
+						userDiscord.getId()+","+userDiscord.getAvatar()+","+userDiscord.getUsername(),
 						passwordEncoder.encode(userDiscord.getEmail()),
 						Boolean.TRUE,
 						Arrays.asList(Role.ROLE_USER)

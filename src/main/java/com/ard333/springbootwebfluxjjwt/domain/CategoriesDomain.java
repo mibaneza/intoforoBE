@@ -26,12 +26,9 @@ public class CategoriesDomain {
 
     private String idpost;
 
+    private boolean est;
 
-    public CategoriesDomain(String tileCategories, String description, String linkLogo) {
-        this.tileCategories = tileCategories;
-        this.description = description;
-        this.linkLogo = linkLogo;
-    }
+
 
     public CategoriesDomain(String tileCategories, String description, String linktitle, String linkLogo) {
         this.tileCategories = tileCategories;
@@ -40,7 +37,16 @@ public class CategoriesDomain {
         this.linkLogo = linkLogo;
     }
 
+
+
     public CategoriesDomain() {
+    }
+    public boolean isEst() {
+        return est;
+    }
+
+    public void setEst(boolean est) {
+        this.est = est;
     }
     public String getIdcategories() {
         return idcategories;
