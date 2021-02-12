@@ -100,7 +100,7 @@ public class UpdatePostService {
                        getdate.date(),
                        getdate.date()))
                .flatMap(updatePostRepository::save);
-    }
+    }/*
     public Mono<PostDomain>  updatePostdate(Duall duall ){
         return  postRepository.findById(duall.getDualv1())
                 .map( (p) -> {

@@ -1,5 +1,6 @@
 package com.ard333.springbootwebfluxjjwt.domain;
 
+import com.ard333.springbootwebfluxjjwt.model.UpdateModel;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -37,6 +38,15 @@ public class UpdateDomain {
         this.username = username;
         this.avatar = avatar;
         this.name = name;
+        this.idcolle = idcolle;
+        this.indat = indat;
+        this.updat = updat;
+    }
+    public UpdateDomain(UpdateModel updateModel,String idcolle, Date indat, Date updat) {
+        this.title = updateModel.getTitle();
+        this.username = updateModel.getUsername();
+        this.avatar = updateModel.getAvatar();
+        this.name = updateModel.getName();
         this.idcolle = idcolle;
         this.indat = indat;
         this.updat = updat;

@@ -1,7 +1,9 @@
 package com.ard333.springbootwebfluxjjwt.rest;
 
+import com.ard333.springbootwebfluxjjwt.domain.ContainerDomain;
 import com.ard333.springbootwebfluxjjwt.domain.PostDomain;
 import com.ard333.springbootwebfluxjjwt.domain.UserDomain;
+import com.ard333.springbootwebfluxjjwt.model.PostModel;
 import com.ard333.springbootwebfluxjjwt.repository.UpdatePostRepository;
 import com.ard333.springbootwebfluxjjwt.service.CategoriesService;
 import com.ard333.springbootwebfluxjjwt.service.PostService;
@@ -44,24 +46,24 @@ public class PostREST {
     @PostMapping(value = "/resource/us/post/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Mono<PostDomain> createUserPost(@PathVariable("id") String id, Principal principal,
-                                                 @RequestBody  PostDomain postDomain){
-        return postService.saveUserPost(id,postDomain,principal);
+    public Mono<ContainerDomain> createUserPost(@PathVariable("id") String id, Principal principal,
+                                                @RequestBody ContainerDomain containerDomain){
+        return postService.saveUserPost(id,containerDomain,principal.getName());
     }
     @PostMapping(value = "/resource/ad/post/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Mono<PostDomain> createAdminPost(@PathVariable("id") String id, Principal principal,
-                                            @RequestBody  PostDomain postDomain){
-        return postService.saveAdminPost(id,postDomain,principal);
+    public Mono<ContainerDomain> createAdminPost(@PathVariable("id") String id, Principal principal,
+                                            @RequestBody  ContainerDomain containerDomain){
+        return postService.saveAdminPost(id,containerDomain,principal.getName());
     }
 
     @PutMapping(value = "/resource/us/post/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Mono<PostDomain> updatePost(@PathVariable("id") String id,
-                                              @RequestBody PostDomain postDomain, Principal principal){
-        return postService.updatePostUser(id,postDomain,principal);
+    public Mono<ContainerDomain> updatePost(@PathVariable("id") String id,
+                                              @RequestBody ContainerDomain containerDomain, Principal principal){
+        return postService.updatePostUser(id,containerDomain,principal);
 
     }
 
@@ -69,8 +71,8 @@ public class PostREST {
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Mono<?> updatePostAdmin(@PathVariable("id") String id,
-                              @RequestBody @Valid PostDomain postDomain, Principal principal){
-        return postService.updatePostAdmin(id,postDomain,principal);
+                              @RequestBody @Valid ContainerDomain containerDomain, Principal principal){
+        return postService.updatePostAdmin(id,containerDomain,principal);
 
     }
 

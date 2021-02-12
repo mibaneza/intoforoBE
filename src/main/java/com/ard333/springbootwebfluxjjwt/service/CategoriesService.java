@@ -41,8 +41,6 @@ public class CategoriesService {
             categoryModels.add(new CategoryModel(
                     cate,
                     postDomain,
-                    userService.findid(postDomain.getIduser()).block(),
-                    updatePostService.findByIdTitle(postDomain.getIdupdate()),
                     commentsService.countByPost(postDomain.getIdpost())
             ));
         }
@@ -61,10 +59,10 @@ public class CategoriesService {
                 .map(c -> categoriesDomain)
                 .flatMap(categoriesRepository::save);
     }
-    public Mono<CategoriesDomain> updateCategoriePost(Duall duall){
-        return categoriesRepository.findById(duall.getDualv1())
+    public Mono<CategoriesDomain> updateCategoriePost(String idcategory, String idpost){
+        return categoriesRepository.findById(idcategory)
                 .map(c -> {
-                    c.setIdpost(duall.getDualv2());
+                    c.setIdpost(idpost);
                    return c;
                 })
                 .flatMap(categoriesRepository::save);

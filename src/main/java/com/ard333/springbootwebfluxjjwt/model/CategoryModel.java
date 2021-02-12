@@ -9,29 +9,15 @@ public class CategoryModel {
 
     private PostDomain postDomain;
 
-    private UserDomain userDomain;
-
-    private String estatus;
-
     private Long quantity;
 
     public CategoryModel() {
     }
 
-    public CategoryModel(CategoriesDomain categoriesDomain, PostDomain postDomain, UserDomain userDomain, String estatus, Long quantity) {
+    public CategoryModel(CategoriesDomain categoriesDomain, PostDomain postDomain, Long quantity) {
         this.categoriesDomain = categoriesDomain;
         this.postDomain = postDomain;
-        this.userDomain = userDomain;
-        this.estatus = estatus;
         this.quantity = quantity;
-    }
-
-    public UserDomain getUserDomain() {
-        return userDomain;
-    }
-
-    public void setUserDomain(UserDomain userDomain) {
-        this.userDomain = userDomain;
     }
 
     public CategoriesDomain getCategoriesDomain() {
@@ -48,14 +34,6 @@ public class CategoryModel {
 
     public void setPostDomain(PostDomain postDomain) {
         this.postDomain = postDomain;
-    }
-
-    public String getEstatus() {
-        return estatus;
-    }
-
-    public void setEstatus(String estatus) {
-        this.estatus = estatus;
     }
 
     public Long getQuantity() {
