@@ -45,7 +45,24 @@ public class CategoriesService {
             ));
         }
                     return Mono.just(categoryModels);
-    }
+    }/*
+    public Mono<List<CategoryModel>> findAllCawdategorieslist() throws NullPointerException{
+        return categoriesRepository
+                .findAll()
+                .collectList()
+                .map((list) -> {
+                    List<CategoryModel> categoryModels = new ArrayList<>();
+                    for (CategoriesDomain cate : list){
+                        PostDomain postDomain = postService.findId(cate.getIdpost()).block();
+                        categoryModels.add(new CategoryModel(
+                                cate,
+                                postDomain,
+                                commentsService.countByPost(postDomain.getIdpost())));
+                    }
+                    return categoryModels;
+                });
+
+    }*/
     public Mono<CategoriesDomain> saveCategories( CategoriesDomain categoriesDomain){
         return categoriesRepository.save(categoriesDomain);
     }

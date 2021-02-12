@@ -7,12 +7,13 @@ import com.ard333.springbootwebfluxjjwt.model.Tri;
 import com.ard333.springbootwebfluxjjwt.repository.*;
 import com.ard333.springbootwebfluxjjwt.service.util.Getdate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.util.Date;
 
-@Service
+@Component
 public class ContainerService {
     @Autowired
     Getdate getdate;
@@ -35,7 +36,9 @@ public class ContainerService {
 
     public Mono<ContainerDomain> saveContainer(Tri tri) {
         Date date = getdate.date();
-        return userService.findByUsernameUpdateComentPost(new Duall(tri.getPostDomain().getIduser(),"post"))
+        return categoriesService.updateCategoriePost(tri.getPostDomain().getIdcategoria(),tri.getPostDomain().getIdpost())
+                .map((aea) -> new Duall(tri.getPostDomain().getIduser(),"post"))
+                .flatMap(userService::findByUsernameUpdateComentPost)
                 .map((user) ->
                         new UpdateDomain(
                         tri.getPostDomain().getUpdateModel(),

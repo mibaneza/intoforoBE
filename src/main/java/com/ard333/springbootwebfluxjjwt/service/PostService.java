@@ -63,6 +63,7 @@ public class PostService {
                                 arrSplit[0],
                                 containerDomain.getLinktitle(),
                                 containerDomain.getTitle(),
+                                true,
                                 c.getIdcategories(),
                                 new UpdateModel("INICIADO", arrSplit[0], arrSplit[1], arrSplit[2])
                         )
@@ -79,6 +80,7 @@ public class PostService {
                                 arrSplit[0],
                                 containerDomain.getLinktitle(),
                                 containerDomain.getTitle(),
+                                containerDomain.getEst(),
                                 c.getIdcategories(),
                                 new UpdateModel("INICIADO", arrSplit[0], arrSplit[1], arrSplit[2])
                         )
