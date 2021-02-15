@@ -8,4 +8,5 @@ import reactor.core.publisher.Mono;
 @Repository
 public interface ContainerRepository extends ReactiveMongoRepository<ContainerDomain, String> {
     Mono<ContainerDomain> findByIdpostAndEst(String id, Boolean bol);
+    Mono<ContainerDomain> findByLinktitle(String idpost);
 }

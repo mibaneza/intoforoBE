@@ -29,7 +29,7 @@ public class ResourceREST {
 	@Autowired
 	private UserService userService;
 	@RequestMapping(value = "/resource/user", method = RequestMethod.GET)
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public Mono<ResponseEntity<?>> user(Principal user) {
 		return Mono.just(ResponseEntity.ok(user));
 	}

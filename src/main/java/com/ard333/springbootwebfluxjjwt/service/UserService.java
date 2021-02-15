@@ -61,7 +61,7 @@ public class UserService {
 					return us;
 				})
 				.flatMap(userRepository::save)
-				.map((user) ->  new User(user.getUsername()+","+user.getAvatar()+","+userDiscord.getUsername(),
+				.map((user) ->  new User(user.getUsername()+","+userDiscord.getAvatar()+","+userDiscord.getUsername()+","+user.getRoles().toArray()[0],
 						user.getPassword(),user.getEnabled(),user.getRoles()));
 	}
 
@@ -101,7 +101,7 @@ public class UserService {
 				userDiscord,
 				Arrays.asList(Role.ROLE_USER),
 				jwtUtil.generateToken(new User(
-						userDiscord.getId()+","+userDiscord.getAvatar()+","+userDiscord.getUsername(),
+						userDiscord.getId()+","+userDiscord.getAvatar()+","+userDiscord.getUsername()+","+Role.ROLE_USER,
 						passwordEncoder.encode(userDiscord.getEmail()),
 						Boolean.TRUE,
 						Arrays.asList(Role.ROLE_USER)

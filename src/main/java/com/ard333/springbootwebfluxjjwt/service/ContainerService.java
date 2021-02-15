@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.Date;
 
-@Component
+@Service
 public class ContainerService {
     @Autowired
     Getdate getdate;
@@ -33,24 +33,19 @@ public class ContainerService {
     @Autowired
     private UserService userService;
 
-
+    public Mono<ContainerDomain> findByLinkTitle(String linktitle){
+        return containerRepository.findByLinktitle(linktitle);
+    }
     public Mono<ContainerDomain> saveContainer(Tri tri) {
-        Date date = getdate.date();
         return categoriesService.updateCategoriePost(tri.getPostDomain().getIdcategoria(),tri.getPostDomain().getIdpost())
                 .map((aea) -> new Duall(tri.getPostDomain().getIduser(),"post"))
                 .flatMap(userService::findByUsernameUpdateComentPost)
-                .map((user) ->
-                        new UpdateDomain(
-                        tri.getPostDomain().getUpdateModel(),
-                        tri.getPostDomain().getIdpost(),
-                        date,
-                        date
-                ))
-                .flatMap(updatePostRepository::save)
                 .map((updateDomain) -> {
                     tri.getContainerDomain().setIdpost(tri.getPostDomain().getIdpost());
                     tri.getContainerDomain().setEst(Boolean.TRUE);
-                    tri.getContainerDomain().setIdupdate(updateDomain.getIdupdateposts());
+                    tri.getContainerDomain().setUpdateModel(tri.getPostDomain().getUpdateModel());
+                    tri.getContainerDomain().setLinktitlecategory(tri.getPostDomain().getLinktitlecategory());
+                    tri.getContainerDomain().setQuantitycommets((long) 0);
                     return tri.getContainerDomain();
                 })
                 .flatMap(containerRepository::save)
@@ -61,10 +56,13 @@ public class ContainerService {
         return  categoriesService.updateCategoriePost(tri.getPostDomain().getIdcategoria(),tri.getPostDomain().getIdpost())
                 .map((aea) -> tri.getDuall())
                 .flatMap(updatetService::upUpdateDomain)
-                .map((update) -> {
-                    tri.getContainerDomain().setIdupdate(update.getIdupdateposts());
-                    tri.getContainerDomain().setEst(Boolean.TRUE);
-                    return tri.getContainerDomain();
+                .map((ga) -> tri.getPostDomain().getLinktitle())
+                .flatMap(containerRepository::findByLinktitle)
+                .map((contianerone) -> {
+                    contianerone.setContent(tri.getContainerDomain().getContent());
+                    contianerone.setLinktitle(tri.getContainerDomain().getLinktitle());
+                    contianerone.setTitle(tri.getContainerDomain().getTitle());
+                    return contianerone;
                 })
                 .flatMap(containerRepository::save)
                 ;
@@ -73,9 +71,14 @@ public class ContainerService {
         return  categoriesService.updateCategoriePost(tri.getPostDomain().getIdcategoria(),tri.getPostDomain().getIdpost())
                 .map((aea) -> tri.getDuall())
                 .flatMap(updatetService::upUpdateDomain)
-                .map((update) -> {
-                    tri.getContainerDomain().setIdupdate(update.getIdupdateposts());
-                    return tri.getContainerDomain();
+                .map((ga) -> tri.getPostDomain().getLinktitle())
+                .flatMap(containerRepository::findByLinktitle)
+                .map((contianerone) -> {
+                    contianerone.setContent(tri.getContainerDomain().getContent());
+                    contianerone.setLinktitle(tri.getContainerDomain().getLinktitle());
+                    contianerone.setEst(tri.getContainerDomain().getEst());
+                    contianerone.setTitle(tri.getContainerDomain().getTitle());
+                    return contianerone;
                 })
                 .flatMap(containerRepository::save)
                 ;

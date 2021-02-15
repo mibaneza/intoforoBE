@@ -2,10 +2,9 @@ package com.ard333.springbootwebfluxjjwt.rest;
 
 import com.ard333.springbootwebfluxjjwt.domain.ContainerDomain;
 import com.ard333.springbootwebfluxjjwt.domain.PostDomain;
-import com.ard333.springbootwebfluxjjwt.domain.UserDomain;
-import com.ard333.springbootwebfluxjjwt.model.PostModel;
 import com.ard333.springbootwebfluxjjwt.repository.UpdatePostRepository;
 import com.ard333.springbootwebfluxjjwt.service.CategoriesService;
+import com.ard333.springbootwebfluxjjwt.service.ContainerService;
 import com.ard333.springbootwebfluxjjwt.service.PostService;
 import com.ard333.springbootwebfluxjjwt.service.util.Getdate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +31,25 @@ public class PostREST {
     @Autowired
     PostService postService;
 
+    @Autowired
+    ContainerService containerService;
+
     @GetMapping(value = "/api/web/posts")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public Flux<PostDomain> readAsll(){
         return postService.findAllPosts();
     }
+
     @GetMapping(value = "/api/web/posts/{id}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public Flux<PostDomain> readAsllCate(@PathVariable("id") String id){
         return postService.findAllPostCategories(id);
+    }
+
+    @GetMapping(value = "/api/web/post/{id}")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public Mono<ContainerDomain> readPostConatiner(@PathVariable("id") String id){
+        return containerService.findByLinkTitle(id);
     }
 
     @PostMapping(value = "/resource/us/post/{id}")

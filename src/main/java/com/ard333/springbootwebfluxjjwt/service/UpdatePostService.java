@@ -96,6 +96,7 @@ public class UpdatePostService {
                        arrSplit[0],
                        arrSplit[1],
                        arrSplit[2],
+                       arrSplit[3],
                        duall.getDualv2(),
                        getdate.date(),
                        getdate.date()))

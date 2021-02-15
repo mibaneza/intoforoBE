@@ -21,35 +21,20 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
-    @Autowired
-    private ContainerRepository containerRepository;
-
-    @Autowired
-    private UpdatePostRepository updatePostRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private CategoriesRepository categoriesRepository;
 
     @Autowired
-    private CategoriesService categoriesService;
-
-    @Autowired
-    private UpdatePostService UpdatetService;
-
-    @Autowired
     private ContainerService containerService;
-
-    @Autowired
-    private UserService userService;
 
     private String[] arrSplit;
     public Mono<PostDomain> findId(String id){
         return postRepository.findById(id);
     }
-
+    public Long countByPost(String idcate){
+        return postRepository.countByIdcategoria(idcate).block();
+    }
     public Flux<PostDomain> findAllPosts(){
         return postRepository.findAll();
     }
@@ -65,7 +50,8 @@ public class PostService {
                                 containerDomain.getTitle(),
                                 true,
                                 c.getIdcategories(),
-                                new UpdateModel("INICIADO", arrSplit[0], arrSplit[1], arrSplit[2])
+                                new UpdateModel("INICIADO", arrSplit[0], arrSplit[1], arrSplit[2], arrSplit[3],getdate.date(),getdate.date()),
+                                c.getLinktitle()
                         )
                 )
                 .flatMap(postRepository::save)
@@ -82,7 +68,8 @@ public class PostService {
                                 containerDomain.getTitle(),
                                 containerDomain.getEst(),
                                 c.getIdcategories(),
-                                new UpdateModel("INICIADO", arrSplit[0], arrSplit[1], arrSplit[2])
+                                new UpdateModel("INICIADO", arrSplit[0], arrSplit[1], arrSplit[2], arrSplit[3]),
+                                c.getLinktitle()
                         )
                 )
                 .flatMap(postRepository::save)
@@ -100,7 +87,7 @@ public class PostService {
                 .map( (p) -> {
                     p.setTitlePost(containerDomain.getTitle());
                     p.setLinktitle(containerDomain.getLinktitle());
-                    p.setUpdateModel(new UpdateModel("ACTUALIZADO", arrSplit[0], arrSplit[1], arrSplit[2]));
+                    p.setUpdateModel(new UpdateModel("ACTUALIZADO", arrSplit[0], arrSplit[1], arrSplit[2], arrSplit[3]));
                     return p;
                 })
                 .flatMap(postRepository::save)
@@ -114,7 +101,7 @@ public class PostService {
                 .map( (p) -> {
                     p.setTitlePost(containerDomain.getTitle());
                     p.setLinktitle(containerDomain.getLinktitle());
-                    p.setUpdateModel(new UpdateModel("ACTUALIZADO", arrSplit[0], arrSplit[1], arrSplit[2]));
+                    p.setUpdateModel(new UpdateModel("ACTUALIZADO", arrSplit[0], arrSplit[1], arrSplit[2], arrSplit[3]));
                     return p;
                 })
                 .flatMap(postRepository::save)

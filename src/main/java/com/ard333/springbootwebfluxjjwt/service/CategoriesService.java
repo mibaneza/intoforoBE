@@ -41,7 +41,7 @@ public class CategoriesService {
             categoryModels.add(new CategoryModel(
                     cate,
                     postDomain,
-                    commentsService.countByPost(postDomain.getIdpost())
+                    postService.countByPost(cate.getIdcategories())
             ));
         }
                     return Mono.just(categoryModels);

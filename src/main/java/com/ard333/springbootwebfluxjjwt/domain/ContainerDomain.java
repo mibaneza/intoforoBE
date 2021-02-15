@@ -1,5 +1,6 @@
 package com.ard333.springbootwebfluxjjwt.domain;
 
+import com.ard333.springbootwebfluxjjwt.model.UpdateModel;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,9 +13,11 @@ public class ContainerDomain {
     private String linktitle;
     private String title;
     private String content;
-    private String idupdate;
+    private UpdateModel updateModel;
     private Boolean est;
     private String idpost;
+    private String linktitlecategory;
+    private Long quantitycommets;
     public ContainerDomain() {
     }
 
@@ -27,6 +30,22 @@ public class ContainerDomain {
         this.content = content;
     }
 
+    public Long getQuantitycommets() {
+        return quantitycommets;
+    }
+
+    public void setQuantitycommets(Long quantitycommets) {
+        this.quantitycommets = quantitycommets;
+    }
+
+    public String getLinktitlecategory() {
+        return linktitlecategory;
+    }
+
+    public void setLinktitlecategory(String linktitlecategory) {
+        this.linktitlecategory = linktitlecategory;
+    }
+
     public String getLinktitle() {
         return linktitle;
     }
@@ -35,9 +54,6 @@ public class ContainerDomain {
         this.linktitle = linktitle;
     }
 
-    public String getIdupdate() {
-        return idupdate;
-    }
 
     public String getIdpost() {
         return idpost;
@@ -47,8 +63,12 @@ public class ContainerDomain {
         this.idpost = idpost;
     }
 
-    public void setIdupdate(String idupdate) {
-        this.idupdate = idupdate;
+    public UpdateModel getUpdateModel() {
+        return updateModel;
+    }
+
+    public void setUpdateModel(UpdateModel updateModel) {
+        this.updateModel = updateModel;
     }
 
     public Boolean getEst() {

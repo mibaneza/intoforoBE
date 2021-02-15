@@ -28,12 +28,14 @@ public class UpdateDomain {
 
     private Date updat;
 
+    private String role;
+
 
 
     public UpdateDomain() {
     }
 
-    public UpdateDomain(String title, String username, String avatar, String name, String idcolle, Date indat, Date updat) {
+    public UpdateDomain(String title, String username, String avatar, String name,String role, String idcolle, Date indat, Date updat) {
         this.title = title;
         this.username = username;
         this.avatar = avatar;
@@ -41,15 +43,18 @@ public class UpdateDomain {
         this.idcolle = idcolle;
         this.indat = indat;
         this.updat = updat;
+        this.role = role;
     }
     public UpdateDomain(UpdateModel updateModel,String idcolle, Date indat, Date updat) {
         this.title = updateModel.getTitle();
         this.username = updateModel.getUsername();
         this.avatar = updateModel.getAvatar();
         this.name = updateModel.getName();
+        this.name = updateModel.getRole();
         this.idcolle = idcolle;
         this.indat = indat;
         this.updat = updat;
+
     }
 /*
     public UpdateDomain(

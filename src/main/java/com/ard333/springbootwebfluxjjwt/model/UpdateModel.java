@@ -1,5 +1,7 @@
 package com.ard333.springbootwebfluxjjwt.model;
 
+import java.util.Date;
+
 public class UpdateModel {
     private String title;
 
@@ -9,12 +11,28 @@ public class UpdateModel {
 
     private String name;
 
-    public UpdateModel(String title, String username, String avatar, String name) {
+    private  String role;
+    private Date indat;
+
+    private Date updat;
+    public UpdateModel(String title, String username, String avatar, String name, String role) {
         this.title = title;
         this.username = username;
         this.avatar = avatar;
         this.name = name;
+        this.role = role;
     }
+
+    public UpdateModel(String title, String username, String avatar, String name, String role, Date indat, Date updat) {
+        this.title = title;
+        this.username = username;
+        this.avatar = avatar;
+        this.name = name;
+        this.role = role;
+        this.indat = indat;
+        this.updat = updat;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -45,5 +63,29 @@ public class UpdateModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getIndat() {
+        return indat;
+    }
+
+    public void setIndat(Date indat) {
+        this.indat = indat;
+    }
+
+    public Date getUpdat() {
+        return updat;
+    }
+
+    public void setUpdat(Date updat) {
+        this.updat = updat;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

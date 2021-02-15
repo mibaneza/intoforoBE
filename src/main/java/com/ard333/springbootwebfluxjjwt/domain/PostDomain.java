@@ -23,6 +23,7 @@ public class PostDomain {
 
     private Boolean est;
 
+    private String linktitlecategory;
 
     private String idcategoria;
 
@@ -32,13 +33,14 @@ public class PostDomain {
     }
 
 
-    public PostDomain(String iduser, String linktitle, String titlePost, Boolean est, String idcategoria, UpdateModel updateModel) {
+    public PostDomain(String iduser, String linktitle, String titlePost, Boolean est, String idcategoria, UpdateModel updateModel,String linktitlecategory) {
         this.iduser = iduser;
         this.linktitle = linktitle;
         this.titlePost = titlePost;
         this.est = est;
         this.idcategoria = idcategoria;
         this.updateModel = updateModel;
+        this.linktitlecategory = linktitlecategory;
     }
 
     public String getLinktitle() {
@@ -95,5 +97,13 @@ public class PostDomain {
 
     public void setEst(Boolean est) {
         this.est = est;
+    }
+
+    public String getLinktitlecategory() {
+        return linktitlecategory;
+    }
+
+    public void setLinktitlecategory(String linktitlecategory) {
+        this.linktitlecategory = linktitlecategory;
     }
 }
