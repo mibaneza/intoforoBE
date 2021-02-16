@@ -23,6 +23,9 @@ public class UpdateModel {
         this.role = role;
     }
 
+    public UpdateModel() {
+    }
+
     public UpdateModel(String title, String username, String avatar, String name, String role, Date indat, Date updat) {
         this.title = title;
         this.username = username;
