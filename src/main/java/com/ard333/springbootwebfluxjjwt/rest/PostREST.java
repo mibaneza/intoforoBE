@@ -52,22 +52,22 @@ public class PostREST {
         return containerService.findByLinkTitle(id);
     }
 
-    @PostMapping(value = "/resource/us/post/{id}")
+    @PostMapping(value = "/resource/user/post/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Mono<ContainerDomain> createUserPost(@PathVariable("id") String id, Principal principal,
                                                 @RequestBody ContainerDomain containerDomain){
         return postService.saveUserPost(id,containerDomain,principal.getName());
     }
-    @PostMapping(value = "/resource/ad/post/{id}")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PostMapping(value = "/resource/admin/post/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Mono<ContainerDomain> createAdminPost(@PathVariable("id") String id, Principal principal,
                                             @RequestBody  ContainerDomain containerDomain){
         return postService.saveAdminPost(id,containerDomain,principal.getName());
     }
 
-    @PutMapping(value = "/resource/us/post/{id}")
+    @PutMapping(value = "/resource/user/post/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Mono<ContainerDomain> updatePost(@PathVariable("id") String id,
@@ -76,7 +76,7 @@ public class PostREST {
 
     }
 
-    @PutMapping(value = "/resource/ad/post/{id}")
+    @PutMapping(value = "/resource/admin/post/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Mono<?> updatePostAdmin(@PathVariable("id") String id,
@@ -85,13 +85,13 @@ public class PostREST {
 
     }
 
-    @DeleteMapping(value = "/resource/us/post/{id}")
+    @DeleteMapping(value = "/resource/user/post/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public Mono<Void> deletePost(@PathVariable("id") String id, Principal principal){
         return postService.deletePostAdminUser(id,principal);
     }
-    @DeleteMapping(value = "/resource/ad/post/{id}")
+    @DeleteMapping(value = "/resource/admin/post/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public Mono<Void> deletePostAdmin(@PathVariable("id") String id){
