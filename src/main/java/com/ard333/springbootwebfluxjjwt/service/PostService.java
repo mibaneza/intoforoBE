@@ -211,7 +211,12 @@ public class PostService {
         String[] arrSplit = principal.getName().split(",");
         return  postRepository.findByIdpostAndIduser(id,arrSplit[0])
                 .switchIfEmpty(Mono.error(Exception::new))
-                .flatMap(postRepository::delete);
+                .flatMap(postRepository::delete)
+                .map((aea) -> {
+                    return id;
+                })
+                .flatMap(containerService:deleteContainer)
+                ;
     }
 
     public Mono<Void> deletePostAdmin(String id){

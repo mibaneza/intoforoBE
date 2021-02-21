@@ -83,5 +83,11 @@ public class ContainerService {
                 .flatMap(containerRepository::save)
                 ;
     }
+     public Mono<Void> deleteContainer(String id){
+        return  containerRepository.findByIdpost(id)
+                .switchIfEmpty(Mono.error(Exception::new))
+                .flatMap(containerRepository::delete)
+                ;
+    }
 
 }
