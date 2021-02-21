@@ -67,15 +67,15 @@ public class CategoriesService {
                 });
 
     }*/
-    public Mono<MensajeResponse<CategoriesDomain>> registerCategories(CategoriesDomain categoriesDomain){
+    public Mono<MensajeResponse<Mono<CategoriesDomain>>> registerCategories(CategoriesDomain categoriesDomain){
         return categoriesRepository.findByLinktitle(categoriesDomain.getLinktitle())
                 .map((cate) -> new MensajeResponse<>(SUCCES, String.valueOf(HttpStatus.CONFLICT), "CONFLICT LINKTITLE",
-                        cate))
+                        Mono.just(cate)))
                 .defaultIfEmpty(new MensajeResponse<>(SUCCES,String.valueOf(HttpStatus.CREATED), "CREADO",saveCategories(categoriesDomain)))
                 ;
     }
-    public CategoriesDomain saveCategories( CategoriesDomain categoriesDomain){
-        return categoriesRepository.save(categoriesDomain).block();
+    public Mono<CategoriesDomain> saveCategories( CategoriesDomain categoriesDomain){
+        return categoriesRepository.save(categoriesDomain);
     }
 
     public Mono<CategoriesDomain> findId(String id){

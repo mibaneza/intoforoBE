@@ -2,6 +2,7 @@ package com.ard333.springbootwebfluxjjwt.rest;
 
 import com.ard333.springbootwebfluxjjwt.domain.CategoriesDomain;
 import com.ard333.springbootwebfluxjjwt.model.CategoryModel;
+import com.ard333.springbootwebfluxjjwt.rest.response.MensajeResponse;
 import com.ard333.springbootwebfluxjjwt.service.CategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,14 +29,13 @@ public class CategoriesREST {
     public Mono<List<CategoryModel>> readAlsl(){
         return categoriesService.findAllCategorieslist();
     }
-/*
+
     @PostMapping(value = "/resource/categoria")
     @PreAuthorize("hasRole('ADMIN')")
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public Mono<CategoriesDomain> createCategory(@RequestBody @Valid CategoriesDomain categoriesDomain){
-        return categoriesService.saveCategories(categoriesDomain);
+    public Mono<MensajeResponse<Mono<CategoriesDomain>>>  createCategory(@RequestBody @Valid CategoriesDomain categoriesDomain){
+        return categoriesService.registerCategories(categoriesDomain);
     }
-*/
+
     @PutMapping(value = "/resource/categoria/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
