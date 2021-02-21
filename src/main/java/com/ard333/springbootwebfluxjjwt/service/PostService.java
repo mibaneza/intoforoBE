@@ -43,7 +43,7 @@ public class PostService {
     }
     public Mono<ContainerDomain> saveUserPost(String id , ContainerDomain containerDomain, String principal) {
          arrSplit = principal.split(",");
-        return categoriesRepository.findByIdcategoriesAndEst(id,true)
+        return categoriesRepository.findByLinktitleAndEst(id,true)
                 .map((c) -> new PostDomain(
                                 arrSplit[0],
                                 containerDomain.getLinktitle(),
@@ -59,9 +59,9 @@ public class PostService {
                 .flatMap(containerService::saveContainer);
     }
 
-    public Mono<ContainerDomain> saveAdminPost(String id , ContainerDomain containerDomain, String principal) {
+    public Mono<ContainerDomain> saveAdminPost(String linktitle , ContainerDomain containerDomain, String principal) {
        arrSplit = principal.split(",");
-        return categoriesRepository.findById(id)
+        return categoriesRepository.findByLinktitle(linktitle)
                 .map((c) -> new PostDomain(
                                 arrSplit[0],
                                 containerDomain.getLinktitle(),

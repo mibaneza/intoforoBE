@@ -5,7 +5,10 @@ import com.ard333.springbootwebfluxjjwt.domain.PostDomain;
 import com.ard333.springbootwebfluxjjwt.model.CategoryModel;
 import com.ard333.springbootwebfluxjjwt.model.Duall;
 import com.ard333.springbootwebfluxjjwt.repository.CategoriesRepository;
+import com.ard333.springbootwebfluxjjwt.rest.response.MensajeResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,7 +31,8 @@ public class CategoriesService {
     PostService postService;
     @Autowired
     CategoriesRepository categoriesRepository;
-
+    private static final String SUCCES = "Succes";
+    private static final String OK = "OK";
     public Flux<CategoriesDomain> findAllCategories(){
         return categoriesRepository.findAll();
     }
@@ -63,8 +67,15 @@ public class CategoriesService {
                 });
 
     }*/
-    public Mono<CategoriesDomain> saveCategories( CategoriesDomain categoriesDomain){
-        return categoriesRepository.save(categoriesDomain);
+    public Mono<MensajeResponse<CategoriesDomain>> registerCategories(CategoriesDomain categoriesDomain){
+        return categoriesRepository.findByLinktitle(categoriesDomain.getLinktitle())
+                .map((cate) -> new MensajeResponse<>(SUCCES, String.valueOf(HttpStatus.CONFLICT), "CONFLICT LINKTITLE",
+                        cate))
+                .defaultIfEmpty(new MensajeResponse<>(SUCCES,String.valueOf(HttpStatus.CREATED), "CREADO",saveCategories(categoriesDomain)))
+                ;
+    }
+    public CategoriesDomain saveCategories( CategoriesDomain categoriesDomain){
+        return categoriesRepository.save(categoriesDomain).block();
     }
 
     public Mono<CategoriesDomain> findId(String id){

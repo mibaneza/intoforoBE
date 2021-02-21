@@ -9,5 +9,8 @@ import reactor.core.publisher.Mono;
 @Repository
 public interface CategoriesRepository extends ReactiveMongoRepository<CategoriesDomain, String> {
       Mono<CategoriesDomain> findByIdcategoriesAndEst(String idcate, boolean est);
+      Mono<CategoriesDomain> findByLinktitle(String linktitle);
+      Mono<Boolean> existsByLinktitle(String linktitle);
+      Mono<CategoriesDomain> findByLinktitleAndEst(String linktitle, boolean est);
 //    Mono<CategoriesDomain> findByIdpost(String idpost);
 }

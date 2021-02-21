@@ -19,7 +19,7 @@ public class CategoriesDomain {
 
     private String description;
 
-    @Indexed
+    @Indexed(unique=true)
     private String linktitle;
 
     private String linkLogo;

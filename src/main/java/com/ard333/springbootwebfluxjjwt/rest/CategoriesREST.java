@@ -28,14 +28,14 @@ public class CategoriesREST {
     public Mono<List<CategoryModel>> readAlsl(){
         return categoriesService.findAllCategorieslist();
     }
-
+/*
     @PostMapping(value = "/resource/categoria")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Mono<CategoriesDomain> createCategory(@RequestBody @Valid CategoriesDomain categoriesDomain){
         return categoriesService.saveCategories(categoriesDomain);
     }
-
+*/
     @PutMapping(value = "/resource/categoria/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)

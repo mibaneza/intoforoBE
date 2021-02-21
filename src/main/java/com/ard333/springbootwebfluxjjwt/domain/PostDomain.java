@@ -16,7 +16,7 @@ public class PostDomain {
 
     private String iduser;
 
-    @Indexed
+    @Indexed(unique=true)
     private String linktitle;
 
     private String titlePost;

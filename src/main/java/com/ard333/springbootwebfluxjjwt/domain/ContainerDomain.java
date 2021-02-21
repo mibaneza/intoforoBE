@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ContainerDomain {
     @Id
     private String id;
-    @Indexed
+    @Indexed(unique=true)
     private String linktitle;
     private String title;
     private String content;
