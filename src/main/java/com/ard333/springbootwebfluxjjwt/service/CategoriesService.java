@@ -40,13 +40,20 @@ public class CategoriesService {
         List<CategoriesDomain> categoriesDomains = categoriesRepository.findAll().collectList().block();
         List<CategoryModel> categoryModels = new ArrayList<>();
         for (CategoriesDomain cate : categoriesDomains){
+            if(cate.getIdpost().equals("0")){
+                categoryModels.add(new CategoryModel(
+                        cate,
+                        null,
+                        null)
+                );
+            }else{
             PostDomain postDomain = postService.findId(cate.getIdpost()).block();
-
             categoryModels.add(new CategoryModel(
                     cate,
                     postDomain,
                     postService.countByPost(cate.getIdcategories())
             ));
+            }
         }
                     return Mono.just(categoryModels);
     }/*
@@ -67,11 +74,10 @@ public class CategoriesService {
                 });
 
     }*/
-    public Mono<MensajeResponse<Mono<CategoriesDomain>>> registerCategories(CategoriesDomain categoriesDomain){
+    public Mono<ResponseEntity<Mono<CategoriesDomain>>> registerCategories(CategoriesDomain categoriesDomain){
         return categoriesRepository.findByLinktitle(categoriesDomain.getLinktitle())
-                .map((cate) -> new MensajeResponse<>(SUCCES, String.valueOf(HttpStatus.CONFLICT), "CONFLICT LINKTITLE",
-                        Mono.just(cate)))
-                .defaultIfEmpty(new MensajeResponse<>(SUCCES,String.valueOf(HttpStatus.CREATED), "CREADO",saveCategories(categoriesDomain)))
+                .map((cate) -> new ResponseEntity<>( Mono.just(cate), HttpStatus.CONFLICT))
+                .defaultIfEmpty(new ResponseEntity<>(saveCategories(categoriesDomain),HttpStatus.CREATED ))
                 ;
     }
     public Mono<CategoriesDomain> saveCategories( CategoriesDomain categoriesDomain){

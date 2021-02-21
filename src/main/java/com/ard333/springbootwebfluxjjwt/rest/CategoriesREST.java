@@ -6,6 +6,7 @@ import com.ard333.springbootwebfluxjjwt.rest.response.MensajeResponse;
 import com.ard333.springbootwebfluxjjwt.service.CategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -32,7 +33,8 @@ public class CategoriesREST {
 
     @PostMapping(value = "/resource/categoria")
     @PreAuthorize("hasRole('ADMIN')")
-    public Mono<MensajeResponse<Mono<CategoriesDomain>>>  createCategory(@RequestBody @Valid CategoriesDomain categoriesDomain){
+    public Mono<ResponseEntity<Mono<CategoriesDomain>>>  createCategory(@RequestBody @Valid CategoriesDomain categoriesDomain){
+        categoriesDomain.setIdpost("0");
         return categoriesService.registerCategories(categoriesDomain);
     }
 
