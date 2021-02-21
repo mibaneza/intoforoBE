@@ -44,7 +44,7 @@ public class CategoriesService {
                 categoryModels.add(new CategoryModel(
                         cate,
                         null,
-                        null)
+                        (long) 0)
                 );
             }else{
             PostDomain postDomain = postService.findId(cate.getIdpost()).block();
