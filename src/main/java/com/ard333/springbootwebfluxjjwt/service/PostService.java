@@ -219,7 +219,9 @@ public class PostService {
     public Mono<Void> deletePostAdmin(String id){
         return  postRepository.findById(id)
                 .switchIfEmpty(Mono.error(Exception::new))
-                .flatMap(postRepository::delete);
+                .flatMap(postRepository::delete)
+                .map((aea) ->  id)
+                .flatMap(containerService::deleteContainer);;
     }
 
 
