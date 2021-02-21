@@ -221,7 +221,7 @@ public class PostService {
                 .switchIfEmpty(Mono.error(Exception::new))
                 .flatMap(postRepository::delete)
                 .map((aea) ->  id)
-                .flatMap(containerService::deleteContainer);;
+                .flatMap(containerService::deleteContainer);
     }
 
 
