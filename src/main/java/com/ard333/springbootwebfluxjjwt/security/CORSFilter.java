@@ -15,6 +15,6 @@ public class CORSFilter implements WebFluxConfigurer {
 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**").allowedOrigins("*").allowedMethods("GET", "POST", "PUT","DELETE").allowedHeaders("*");
+		registry.addMapping("/**").allowedOrigins("http://localhost:4200").allowedMethods("GET", "POST", "PUT","DELETE").allowedHeaders("*");
 	}
 }

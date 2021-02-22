@@ -33,7 +33,7 @@ public class CategoriesREST {
 
     @PostMapping(value = "/resource/categoria")
     @PreAuthorize("hasRole('ADMIN')")
-    public Mono<ResponseEntity<Mono<CategoriesDomain>>>  createCategory(@RequestBody @Valid CategoriesDomain categoriesDomain){
+    public Mono<ResponseEntity<Mono<CategoriesDomain>>>  createCategory(@RequestBody CategoriesDomain categoriesDomain){
         categoriesDomain.setIdpost("0");
         return categoriesService.registerCategories(categoriesDomain);
     }
