@@ -36,6 +36,11 @@ public class CategoriesService {
     public Flux<CategoriesDomain> findAllCategories(){
         return categoriesRepository.findAll();
     }
+    public Mono<CategoriesDomain> findOneCategory(String linktitle){
+        return  categoriesRepository.findByLinktitle(linktitle);
+    }
+
+
     public Mono<List<CategoryModel>> findAllCategorieslist() throws NullPointerException{
         List<CategoriesDomain> categoriesDomains = categoriesRepository.findAll().collectList().block();
         List<CategoryModel> categoryModels = new ArrayList<>();

@@ -25,6 +25,11 @@ public class CategoriesREST {
     public Flux<CategoriesDomain> readAll(){
         return categoriesService.findAllCategories();
     }
+    @GetMapping(value = "/api/web/categoria/{linktitle}")
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public Flux<CategoriesDomain> readOne(@PathVariable("linktitle") String linktitle){
+        return categoriesService.findOneCategory(linktitle);
+    }
     @GetMapping(value = "/api/web/categoriaslist")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public Mono<List<CategoryModel>> readAlsl(){
