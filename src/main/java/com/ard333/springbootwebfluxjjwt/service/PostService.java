@@ -41,10 +41,10 @@ public class PostService {
     public Flux<PostDomain> findAllPostCategories(String idcategory){
         return postRepository.findByIdcategoria(idcategory);
     }
-    public Mono<PostDomain> saveUserPost(String linktitle, ContainerDomain containerDomain, String principal) {
+    public Mono<PostDomain> saveUserPost(String linktitleCategory, ContainerDomain containerDomain, String principal) {
          arrSplit = principal.split(",");
          UpdateModel updateModel = new UpdateModel("INICIADO", arrSplit[0], arrSplit[1], arrSplit[2], arrSplit[3],getdate.date(),getdate.date());
-        return categoriesRepository.findByLinktitleAndEst(linktitle,true)
+        return categoriesRepository.findByLinktitleAndEst(linktitleCategory,true)
                 .map((c) -> new PostDomain(
                                 arrSplit[0],
                                 containerDomain.getLinktitle(),
@@ -70,10 +70,10 @@ public class PostService {
                         ));
     }
 
-    public Mono<PostDomain> saveAdminPost(String linktitle , ContainerDomain containerDomain, String principal) {
+    public Mono<PostDomain> saveAdminPost(String linktitleCategory , ContainerDomain containerDomain, String principal) {
        arrSplit = principal.split(",");
        UpdateModel updateModel = new UpdateModel("INICIADO", arrSplit[0], arrSplit[1], arrSplit[2], arrSplit[3],getdate.date(),getdate.date());
-        return categoriesRepository.findByLinktitle(linktitle)
+        return categoriesRepository.findByLinktitle(linktitleCategory)
                 .map((c) -> new PostDomain(
                                 arrSplit[0],
                                 containerDomain.getLinktitle(),

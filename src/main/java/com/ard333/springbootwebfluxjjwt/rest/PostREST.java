@@ -52,20 +52,20 @@ public class PostREST {
         return containerService.findByLinkTitle(id);
     }
 
-    @PostMapping(value = "/resource/user/post/{id}")
+    @PostMapping(value = "/resource/user/post/{linktitleCategory}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Mono<PostDomain> createUserPost(@PathVariable("id") String id, Principal principal,
+    public Mono<PostDomain> createUserPost(@PathVariable("linktitleCategory") String linktitleCategory, Principal principal,
                                                 @RequestBody ContainerDomain containerDomain){
-        return postService.saveUserPost(id,containerDomain,principal.getName());
+        return postService.saveUserPost(linktitleCategory,containerDomain,principal.getName());
     }
-    
-    @PostMapping(value = "/resource/admin/post/{id}")
+
+    @PostMapping(value = "/resource/admin/post/{linktitleCategory}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Mono<PostDomain> createAdminPost(@PathVariable("id") String id, Principal principal,
+    public Mono<PostDomain> createAdminPost(@PathVariable("linktitleCategory") String linktitleCategory, Principal principal,
                                             @RequestBody  ContainerDomain containerDomain){
-        return postService.saveAdminPost(id,containerDomain,principal.getName());
+        return postService.saveAdminPost(linktitleCategory,containerDomain,principal.getName());
     }
 
     @PutMapping(value = "/resource/user/post/{id}")
