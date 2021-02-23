@@ -24,15 +24,14 @@ public class CategoriesDomain {
     private boolean est;
 
 
-
-    public CategoriesDomain(String tilecategories, String description, String linktitle, String linkLogo) {
+    public CategoriesDomain(String tilecategories, String description, String linktitle, String linklogo, String idpost, boolean est) {
         this.tilecategories = tilecategories;
         this.description = description;
         this.linktitle = linktitle;
-        this.linklogo = linkLogo;
+        this.linklogo = linklogo;
+        this.idpost = idpost;
+        this.est = est;
     }
-
-
 
     public CategoriesDomain() {
     }
