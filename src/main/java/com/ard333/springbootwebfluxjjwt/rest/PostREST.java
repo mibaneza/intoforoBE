@@ -40,10 +40,10 @@ public class PostREST {
         return postService.findAllPosts();
     }
 
-    @GetMapping(value = "/api/web/posts/{id}")
+    @GetMapping(value = "/api/web/posts/{idcategory}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
-    public Flux<PostDomain> readAsllCate(@PathVariable("id") String id){
-        return postService.findAllPostCategories(id);
+    public Flux<PostDomain> readAsllCate(@PathVariable("idcategory") String idcategory){
+        return postService.findAllPostCategories(idcategory);
     }
 
     @GetMapping(value = "/api/web/post/{id}")
@@ -55,14 +55,14 @@ public class PostREST {
     @PostMapping(value = "/resource/user/post/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Mono<ContainerDomain> createUserPost(@PathVariable("id") String id, Principal principal,
+    public Mono<PostDomain> createUserPost(@PathVariable("id") String id, Principal principal,
                                                 @RequestBody ContainerDomain containerDomain){
         return postService.saveUserPost(id,containerDomain,principal.getName());
     }
     @PostMapping(value = "/resource/admin/post/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Mono<ContainerDomain> createAdminPost(@PathVariable("id") String id, Principal principal,
+    public Mono<PostDomain> createAdminPost(@PathVariable("id") String id, Principal principal,
                                             @RequestBody  ContainerDomain containerDomain){
         return postService.saveAdminPost(id,containerDomain,principal.getName());
     }

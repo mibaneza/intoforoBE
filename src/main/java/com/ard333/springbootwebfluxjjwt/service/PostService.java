@@ -38,29 +38,41 @@ public class PostService {
     public Flux<PostDomain> findAllPosts(){
         return postRepository.findAll();
     }
-    public Flux<PostDomain> findAllPostCategories(String cate){
-        return postRepository.findByIdcategoria(cate);
+    public Flux<PostDomain> findAllPostCategories(String idcategory){
+        return postRepository.findByIdcategoria(idcategory);
     }
-    public Mono<ContainerDomain> saveUserPost(String id , ContainerDomain containerDomain, String principal) {
+    public Mono<PostDomain> saveUserPost(String linktitle, ContainerDomain containerDomain, String principal) {
          arrSplit = principal.split(",");
-        return categoriesRepository.findByLinktitleAndEst(id,true)
+         UpdateModel updateModel = new UpdateModel("INICIADO", arrSplit[0], arrSplit[1], arrSplit[2], arrSplit[3],getdate.date(),getdate.date());
+        return categoriesRepository.findByLinktitleAndEst(linktitle,true)
                 .map((c) -> new PostDomain(
                                 arrSplit[0],
                                 containerDomain.getLinktitle(),
                                 containerDomain.getTitle(),
                                 true,
                                 c.getIdcategories(),
-                                new UpdateModel("INICIADO", arrSplit[0], arrSplit[1], arrSplit[2], arrSplit[3],getdate.date(),getdate.date()),
+                                nupdateModel,
                                 c.getLinktitle()
                         )
                 )
                 .flatMap(postRepository::save)
                 .map((p) -> new Tri(p,containerDomain))
-                .flatMap(containerService::saveContainer);
+                .flatMap(containerService::saveContainer)
+                .map((c) -> new PostDomain(
+                                c.getIdpost(),
+                                arrSplit[0],
+                                containerDomain.getLinktitle(),
+                                containerDomain.getTitle(),
+                                true,
+                                c.getIdcategories(),
+                                nupdateModel,
+                                c.getLinktitle()
+                        ));
     }
 
-    public Mono<ContainerDomain> saveAdminPost(String linktitle , ContainerDomain containerDomain, String principal) {
+    public Mono<PostDomain> saveAdminPost(String linktitle , ContainerDomain containerDomain, String principal) {
        arrSplit = principal.split(",");
+       UpdateModel updateModel = new UpdateModel("INICIADO", arrSplit[0], arrSplit[1], arrSplit[2], arrSplit[3],getdate.date(),getdate.date());
         return categoriesRepository.findByLinktitle(linktitle)
                 .map((c) -> new PostDomain(
                                 arrSplit[0],
@@ -68,13 +80,23 @@ public class PostService {
                                 containerDomain.getTitle(),
                                 containerDomain.getEst(),
                                 c.getIdcategories(),
-                                new UpdateModel("INICIADO", arrSplit[0], arrSplit[1], arrSplit[2], arrSplit[3]),
+                                nupdateModel,
                                 c.getLinktitle()
                         )
                 )
                 .flatMap(postRepository::save)
                 .map((p) -> new Tri(p,containerDomain))
-                .flatMap(containerService::saveContainer);
+                .flatMap(containerService::saveContainer)
+                .map((c) -> new PostDomain(
+                                c.getIdpost(),
+                                arrSplit[0],
+                                containerDomain.getLinktitle(),
+                                containerDomain.getTitle(),
+                                true,
+                                c.getIdcategories(),
+                                nupdateModel,
+                                c.getLinktitle()
+                        ));
     }
 
 

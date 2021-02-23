@@ -19,7 +19,7 @@ public class PostDomain {
     @Indexed(unique=true)
     private String linktitle;
 
-    private String titlePost;
+    private String titlepost;
 
     private Boolean est;
 
@@ -32,11 +32,20 @@ public class PostDomain {
     public PostDomain() {
     }
 
-
-    public PostDomain(String iduser, String linktitle, String titlePost, Boolean est, String idcategoria, UpdateModel updateModel,String linktitlecategory) {
+    public PostDomain(String idpost, String iduser, String linktitle, String titlepost, Boolean est, String idcategoria, UpdateModel updateModel,String linktitlecategory) {
+        this.idpost = idpost;
         this.iduser = iduser;
         this.linktitle = linktitle;
-        this.titlePost = titlePost;
+        this.titlepost = titlepost;
+        this.est = est;
+        this.idcategoria = idcategoria;
+        this.updateModel = updateModel;
+        this.linktitlecategory = linktitlecategory;
+    }
+    public PostDomain(String iduser, String linktitle, String titlepost, Boolean est, String idcategoria, UpdateModel updateModel,String linktitlecategory) {
+        this.iduser = iduser;
+        this.linktitle = linktitle;
+        this.titlepost = titlepost;
         this.est = est;
         this.idcategoria = idcategoria;
         this.updateModel = updateModel;
@@ -83,12 +92,12 @@ public class PostDomain {
         this.idpost = idpost;
     }
 
-    public String getTitlePost() {
-        return titlePost;
+    public String getTitlepost() {
+        return titlepost;
     }
 
-    public void setTitlePost(String titlePost) {
-        this.titlePost = titlePost;
+    public void setTitlepost(String titlepost) {
+        this.titlepost = titlepost;
     }
 
     public Boolean getEst() {

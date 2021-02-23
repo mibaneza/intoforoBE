@@ -11,10 +11,12 @@ public class UpdateModel {
 
     private String name;
 
-    private  String role;
+    private String role;
+
     private Date indat;
 
     private Date updat;
+
     public UpdateModel(String title, String username, String avatar, String name, String role) {
         this.title = title;
         this.username = username;
