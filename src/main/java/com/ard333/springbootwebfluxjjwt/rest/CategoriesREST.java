@@ -27,7 +27,7 @@ public class CategoriesREST {
     }
     @GetMapping(value = "/api/web/categoria/{linktitle}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
-    public Flux<CategoriesDomain> readOne(@PathVariable("linktitle") String linktitle){
+    public Mono<CategoriesDomain> readOne(@PathVariable("linktitle") String linktitle){
         return categoriesService.findOneCategory(linktitle);
     }
     @GetMapping(value = "/api/web/categoriaslist")
