@@ -51,7 +51,7 @@ public class PostService {
                                 containerDomain.getTitle(),
                                 true,
                                 c.getIdcategories(),
-                                nupdateModel,
+                                updateModel,
                                 c.getLinktitle()
                         )
                 )
@@ -64,8 +64,8 @@ public class PostService {
                                 containerDomain.getLinktitle(),
                                 containerDomain.getTitle(),
                                 true,
-                                c.getIdcategories(),
-                                nupdateModel,
+                                c.getLinktitlecategory(),
+                                updateModel,
                                 c.getLinktitle()
                         ));
     }
@@ -80,7 +80,7 @@ public class PostService {
                                 containerDomain.getTitle(),
                                 containerDomain.getEst(),
                                 c.getIdcategories(),
-                                nupdateModel,
+                                updateModel,
                                 c.getLinktitle()
                         )
                 )
@@ -93,8 +93,8 @@ public class PostService {
                                 containerDomain.getLinktitle(),
                                 containerDomain.getTitle(),
                                 true,
-                                c.getIdcategories(),
-                                nupdateModel,
+                                c.getLinktitlecategory(),
+                                updateModel,
                                 c.getLinktitle()
                         ));
     }
@@ -107,7 +107,7 @@ public class PostService {
         arrSplit = principal.getName().split(",");
         return  postRepository.findByIdpostAndIduser(idpost,arrSplit[0])
                 .map( (p) -> {
-                    p.setTitlePost(containerDomain.getTitle());
+                    p.setTitlepost(containerDomain.getTitle());
                     p.setLinktitle(containerDomain.getLinktitle());
                     p.setUpdateModel(new UpdateModel("ACTUALIZADO", arrSplit[0], arrSplit[1], arrSplit[2], arrSplit[3]));
                     return p;
@@ -121,7 +121,7 @@ public class PostService {
         arrSplit = principal.getName().split(",");
         return  postRepository.findById(idpost)
                 .map( (p) -> {
-                    p.setTitlePost(containerDomain.getTitle());
+                    p.setTitlepost(containerDomain.getTitle());
                     p.setLinktitle(containerDomain.getLinktitle());
                     p.setUpdateModel(new UpdateModel("ACTUALIZADO", arrSplit[0], arrSplit[1], arrSplit[2], arrSplit[3]));
                     return p;

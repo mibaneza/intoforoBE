@@ -59,6 +59,7 @@ public class PostREST {
                                                 @RequestBody ContainerDomain containerDomain){
         return postService.saveUserPost(id,containerDomain,principal.getName());
     }
+    
     @PostMapping(value = "/resource/admin/post/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(code = HttpStatus.CREATED)
