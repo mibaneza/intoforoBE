@@ -46,10 +46,10 @@ public class PostREST {
         return postService.findAllPostCategories(idcategory);
     }
 
-    @GetMapping(value = "/api/web/post/{id}")
+    @GetMapping(value = "/api/web/post/{linktiltle}")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
-    public Mono<ContainerDomain> readPostConatiner(@PathVariable("id") String id){
-        return containerService.findByLinkTitle(id);
+    public Mono<ContainerDomain> readPostConatiner(@PathVariable("linktiltle") String linktiltle){
+        return containerService.findByLinkTitle(linktiltle);
     }
 
     @PostMapping(value = "/resource/user/post/{linktitleCategory}")
